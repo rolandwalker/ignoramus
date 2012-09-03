@@ -548,7 +548,7 @@ fully-qualified pathname."
   "Return non-nil if ignoramus thinks FILE is uninteresting."
   (unless ignoramus-boring-file-regexp
     (ignoramus-compute-common-regexps))
-  (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory (file))))
+  (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file)))
 
 ;;; configuration action plugins
 
