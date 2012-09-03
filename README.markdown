@@ -8,9 +8,9 @@ Quickstart
 
     (require 'ignoramus)
 
-    (ignoramus-setup)    ; sets `vc-directory-exclusion-list`,
-                         ; `dired-omit-files`, `ido-ignore-directories`,
-                         ; `completion-ignored-extensions`, etc.
+    (ignoramus-setup)    ; sets vc-directory-exclusion-list,
+                         ; dired-omit-files, ido-ignore-directories,
+                         ; completion-ignored-extensions, etc.
 
     C-x C-j              ; backups and build files now omitted from dired
 
