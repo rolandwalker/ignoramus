@@ -135,8 +135,25 @@
 
 ;;; requires
 
-;; for callf
 (eval-when-compile
+  ;; declarations for byte compiler
+  (defvar dired-garbage-files-regexp)
+  (defvar dired-omit-extensions)
+  (defvar dired-omit-files)
+  (defvar dired-omit-mode)
+  (defvar eshell-cmpl-dir-ignore)
+  (defvar eshell-cmpl-file-ignore)
+  (defvar grep-find-ignored-directories)
+  (defvar grep-find-ignored-files)
+  (defvar ido-ignore-directories)
+  (defvar ido-ignore-files)
+  (defvar nav-boring-file-regexps)
+  (defvar pcomplete-dir-ignore)
+  (defvar pcomplete-file-ignore)
+  (defvar shell-completion-fignore)
+  (defvar speedbar-directory-unshown-regexp)
+  (defvar speedbar-file-unshown-regexp)
+  ;; for callf
   (require 'cl))
 
 ;;; variables
