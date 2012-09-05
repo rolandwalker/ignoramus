@@ -6,6 +6,8 @@ Ignore backups, build files, et al. in Emacs.
 Quickstart
 ----------
 
+	(require 'dired-x)
+
     (require 'ignoramus)
 
     (ignoramus-setup)    ; sets vc-directory-exclusion-list,
