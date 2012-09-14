@@ -139,6 +139,8 @@
 ;; for callf
 (require 'cl)
 
+(declare-function dired-omit-mode "dired-x.el")
+
 (eval-when-compile
   ;; declarations for byte compiler
   (defvar dired-garbage-files-regexp)
