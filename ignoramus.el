@@ -136,6 +136,9 @@
 
 ;;; requires
 
+;; for callf
+(require 'cl)
+
 (eval-when-compile
   ;; declarations for byte compiler
   (defvar dired-garbage-files-regexp)
@@ -153,9 +156,7 @@
   (defvar pcomplete-file-ignore)
   (defvar shell-completion-fignore)
   (defvar speedbar-directory-unshown-regexp)
-  (defvar speedbar-file-unshown-regexp)
-  ;; for callf
-  (require 'cl))
+  (defvar speedbar-file-unshown-regexp))
 
 ;;; variables
 
