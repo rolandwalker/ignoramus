@@ -156,7 +156,8 @@
   (defvar pcomplete-file-ignore)
   (defvar shell-completion-fignore)
   (defvar speedbar-directory-unshown-regexp)
-  (defvar speedbar-file-unshown-regexp))
+  (defvar speedbar-file-unshown-regexp)
+  (defvar comint-completion-fignore))
 
 ;;; variables
 
