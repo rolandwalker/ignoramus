@@ -8,15 +8,17 @@ Ignore backups, build files, *et al*. in Emacs.
 Quickstart
 ----------
 
-	(require 'dired-x)
-
-	(require 'ignoramus)
-
-	(ignoramus-setup)    ; sets vc-directory-exclusion-list,
-	                     ; dired-omit-files, ido-ignore-directories,
-	                     ; completion-ignored-extensions, etc.
-
-	C-x C-j              ; backups and build files now omitted from dired
+```lisp
+(require 'dired-x)
+ 
+(require 'ignoramus)
+ 
+(ignoramus-setup)    ; sets vc-directory-exclusion-list,
+                     ; dired-omit-files, ido-ignore-directories,
+                     ; completion-ignored-extensions, etc.
+ 
+;; execute C-x C-j   ; backups and build files now omitted from dired
+```
 
 Explanation
 -----------
@@ -28,8 +30,10 @@ and the logic for applying those patterns together in one place.
 To use ignoramus, place the ignoramus.el library somewhere Emacs
 can find it, and add the following to your `~/.emacs` file:
 
-	(require 'ignoramus)
-	(ignoramus-setup)
+```lisp
+(require 'ignoramus)
+(ignoramus-setup)
+```
 
 By default, `ignoramus-setup` will apply every action that it
 knows about for ignoring files.  Currently these are
@@ -49,7 +53,9 @@ knows about for ignoring files.  Currently these are
 
 You can specify a shorter list of actions as an argument
 
-    (ignoramus-setup '(pcomplete shell ido))
+```lisp
+(ignoramus-setup '(pcomplete shell ido))
+```
 
 or customize the value of `ignoramus-default-actions`.
 
