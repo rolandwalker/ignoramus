@@ -3,20 +3,20 @@
 Overview
 ========
 
-Ignore backups, build files, et al. in Emacs.
+Ignore backups, build files, *et al*. in Emacs.
 
 Quickstart
 ----------
 
 	(require 'dired-x)
 
-    (require 'ignoramus)
+	(require 'ignoramus)
 
-    (ignoramus-setup)    ; sets vc-directory-exclusion-list,
-                         ; dired-omit-files, ido-ignore-directories,
-                         ; completion-ignored-extensions, etc.
+	(ignoramus-setup)    ; sets vc-directory-exclusion-list,
+	                     ; dired-omit-files, ido-ignore-directories,
+	                     ; completion-ignored-extensions, etc.
 
-    C-x C-j              ; backups and build files now omitted from dired
+	C-x C-j              ; backups and build files now omitted from dired
 
 Explanation
 -----------
@@ -28,24 +28,24 @@ and the logic for applying those patterns together in one place.
 To use ignoramus, place the ignoramus.el library somewhere Emacs
 can find it, and add the following to your `~/.emacs` file:
 
-    (require 'ignoramus)
-    (ignoramus-setup)
+	(require 'ignoramus)
+	(ignoramus-setup)
 
 By default, `ignoramus-setup` will apply every action that it
 knows about for ignoring files.  Currently these are
 
-    comint
-    completions
-    dired
-    eshell
-    grep
-    ido
-    nav
-    pcomplete
-    projectile
-    shell
-    speedbar
-    vc
+	comint
+	completions
+	dired
+	eshell
+	grep
+	ido
+	nav
+	pcomplete
+	projectile
+	shell
+	speedbar
+	vc
 
 You can specify a shorter list of actions as an argument
 
@@ -53,21 +53,19 @@ You can specify a shorter list of actions as an argument
 
 or customize the value of `ignoramus-default-actions`.
 
-
 Compatibility and Requirements
 ------------------------------
 
-    Tested on GNU Emacs versions 23.3 and 24.1
+Tested on GNU Emacs versions 23.3 and 24.1
 
-    No external dependencies
-
+No external dependencies
 
 Notes
 -----
 
 One function is provided to be called from Lisp:
 
-    ignoramus-boring-p
+	ignoramus-boring-p
 
 Bugs
 ----
