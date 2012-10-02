@@ -524,6 +524,10 @@ fully-qualified pathname."
     "~.dot"                                ; xcode
     "~.nib"                                ; xcode
     "~.plst"                               ; xcode
+    "test.out"                             ; generic testing
+    "test_out"                             ; generic testing
+    "test.output"                          ; generic testing
+    "test_output"                          ; generic testing
     )
   "List of exact filenames to ignore.
 
