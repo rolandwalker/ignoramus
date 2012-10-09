@@ -134,6 +134,13 @@
 ;; interpreted as representing official policies, either expressed
 ;; or implied, of Roland Walker.
 ;;
+;;; Change Log:
+;;
+;; 09 Oct 2012
+;;     Incompatible change: defcustom variable names changed in
+;;     anticipation of separating file and directory components.
+;;     Obsolete aliases are included.
+;;
 ;;; Code:
 ;;
 
@@ -189,6 +196,14 @@
 ;;; customizable variables
 
 ;;;###autoload
+(progn
+  ;; obsolete forms
+  (define-obsolete-variable-alias 'ignoramus-file-endings     'ignoramus-file-basename-endings)
+  (define-obsolete-variable-alias 'ignoramus-file-beginnings  'ignoramus-file-basename-beginnings)
+  (define-obsolete-variable-alias 'ignoramus-file-exact-names 'ignoramus-file-basename-exact-names)
+  (define-obsolete-variable-alias 'ignoramus-file-regexps     'ignoramus-file-basename-regexps))
+
+;;;###autoload
 (defgroup ignoramus nil
   "Ignore backups, build files, et al."
   :version "0.5.1"
@@ -209,7 +224,7 @@
   "File patterns to ignore."
   :group 'ignoramus)
 
-(defcustom ignoramus-file-endings
+(defcustom ignoramus-file-basename-endings
   '(
     ".386"                                    ; compiled binary
     ".a"                                      ; compiled binary
@@ -379,7 +394,7 @@ occur at the ends of file names to ignore."
   :type '(repeat string)
   :group 'ignoramus-patterns)
 
-(defcustom ignoramus-file-beginnings
+(defcustom ignoramus-file-basename-beginnings
   '(
     ".#"                                   ; emacs
     "core."                                ; unix
@@ -396,7 +411,7 @@ fully-qualified pathname."
   :type '(repeat string)
   :group 'ignoramus-patterns)
 
-(defcustom ignoramus-file-exact-names
+(defcustom ignoramus-file-basename-exact-names
   '(
     "$RECYCLE.BIN"                         ; ms-windows
     ".AppleDouble"                         ; OS X
@@ -538,7 +553,7 @@ fully-qualified pathname."
   :type '(repeat string)
   :group 'ignoramus-patterns)
 
-(defcustom ignoramus-file-regexps
+(defcustom ignoramus-file-basename-regexps
   '(
     "\\`#.*#\\'"                              ; emacs
     "\\`.*\\.mex[^.]*\\'"                     ; matlab
@@ -562,24 +577,24 @@ fully-qualified pathname."
 
 (defun ignoramus-compute-common-regexps ()
   "Compute common regexps used by plugins."
-  (setq ignoramus-boring-dir-regexp ignoramus-file-regexps)
-  (when ignoramus-file-exact-names
-    (push (concat "\\`" (regexp-opt ignoramus-file-exact-names) "\\'")
+  (setq ignoramus-boring-dir-regexp ignoramus-file-basename-regexps)
+  (when ignoramus-file-basename-exact-names
+    (push (concat "\\`" (regexp-opt ignoramus-file-basename-exact-names) "\\'")
           ignoramus-boring-dir-regexp))
-  (when ignoramus-file-beginnings
-    (push (concat "\\`" (regexp-opt ignoramus-file-beginnings))
+  (when ignoramus-file-basename-beginnings
+    (push (concat "\\`" (regexp-opt ignoramus-file-basename-beginnings))
           ignoramus-boring-dir-regexp))
   (when ignoramus-boring-dir-regexp
     (setq ignoramus-boring-dir-regexp (mapconcat 'identity ignoramus-boring-dir-regexp "\\|")))
-  (setq ignoramus-boring-file-regexp ignoramus-file-regexps)
-  (when ignoramus-file-exact-names
-    (push (concat "\\`" (regexp-opt ignoramus-file-exact-names) "\\'")
+  (setq ignoramus-boring-file-regexp ignoramus-file-basename-regexps)
+  (when ignoramus-file-basename-exact-names
+    (push (concat "\\`" (regexp-opt ignoramus-file-basename-exact-names) "\\'")
           ignoramus-boring-file-regexp))
-  (when ignoramus-file-endings
-    (push (concat       (regexp-opt ignoramus-file-endings) "\\'")
+  (when ignoramus-file-basename-endings
+    (push (concat       (regexp-opt ignoramus-file-basename-endings) "\\'")
           ignoramus-boring-file-regexp))
-  (when ignoramus-file-beginnings
-    (push (concat "\\`" (regexp-opt ignoramus-file-beginnings))
+  (when ignoramus-file-basename-beginnings
+    (push (concat "\\`" (regexp-opt ignoramus-file-basename-beginnings))
           ignoramus-boring-file-regexp))
   (when ignoramus-boring-file-regexp
     (setq ignoramus-boring-file-regexp (mapconcat 'identity ignoramus-boring-file-regexp "\\|"))))
@@ -599,32 +614,32 @@ fully-qualified pathname."
 
 (defun ignoramus-do-ignore-vc ()
   "Tell `vc-mode' to ignore unwanted files."
-  (setq vc-directory-exclusion-list ignoramus-file-exact-names))
+  (setq vc-directory-exclusion-list ignoramus-file-basename-exact-names))
 
 
 (defun ignoramus-do-ignore-grep ()
   "Tell `grep-mode' to ignore unwanted files."
   (setq grep-find-ignored-files (cons ".#*" (delq nil (mapcar #'(lambda (pat)
-                                                                  (concat "*" pat)) ignoramus-file-endings))))
-  (setq grep-find-ignored-directories ignoramus-file-exact-names))
+                                                                  (concat "*" pat)) ignoramus-file-basename-endings))))
+  (setq grep-find-ignored-directories ignoramus-file-basename-exact-names))
 
 
 (defun ignoramus-do-ignore-shell ()
   "Tell `shell-mode' to ignore unwanted files."
-  (setq shell-completion-fignore ignoramus-file-endings))
+  (setq shell-completion-fignore ignoramus-file-basename-endings))
 
 
 (defun ignoramus-do-ignore-comint ()
   "Tell `comint-mode' and derived modes to ignore unwanted files."
-  (setq comint-completion-fignore ignoramus-file-endings))
+  (setq comint-completion-fignore ignoramus-file-basename-endings))
 
 
 (defun ignoramus-do-ignore-completions ()
   "Tell built-in completions to ignore unwanted files."
   (setq completion-ignored-extensions (append
-                                       ignoramus-file-endings
+                                       ignoramus-file-basename-endings
                                        (mapcar (lambda (pat)
-                                                 (concat pat "/")) ignoramus-file-exact-names))))
+                                                 (concat pat "/")) ignoramus-file-basename-exact-names))))
 
 
 (defun ignoramus-do-ignore-nav ()
@@ -643,7 +658,7 @@ fully-qualified pathname."
   (setq eshell-cmpl-file-ignore ignoramus-boring-file-regexp)
   ;; todo use more patterns here
   (setq eshell-cmpl-dir-ignore (concat "\\`"
-                                       (regexp-opt (append '("." "..") ignoramus-file-exact-names))
+                                       (regexp-opt (append '("." "..") ignoramus-file-basename-exact-names))
                                        "/\\'")))
 
 
@@ -662,7 +677,7 @@ fully-qualified pathname."
   (setq dired-garbage-files-regexp ignoramus-boring-file-regexp)
 
   ;; The "omit" regexps affect dired-x.el when `dired-omit-mode' is set.
-  (setq dired-omit-extensions ignoramus-file-endings)
+  (setq dired-omit-extensions ignoramus-file-basename-endings)
   (setq dired-omit-files ignoramus-boring-file-regexp))
 
 
@@ -672,9 +687,9 @@ fully-qualified pathname."
   ;; according to what projectile expects
   ;; (setq projectile-ignored-file-extensions (mapcar #'(lambda (ext)
   ;;                                                      (replace-regexp-in-string "\\`\\." "" ext))
-  ;;                                                 ignoramus-file-endings))
-  ;; (setq projectile-ignored-files ignoramus-file-exact-names)
-  ;; (setq projectile-ignored-directories ignoramus-file-exact-names)
+  ;;                                                 ignoramus-file-basename-endings))
+  ;; (setq projectile-ignored-files ignoramus-file-basename-exact-names)
+  ;; (setq projectile-ignored-directories ignoramus-file-basename-exact-names)
 
   ;; a better test than what projectile does - note no longer just extensions
   (eval-after-load "projectile"
