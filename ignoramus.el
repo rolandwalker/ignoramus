@@ -516,7 +516,6 @@ fully-qualified pathname."
     "testresult"                           ; visualstudio
     "Thumbs.db"                            ; ms-windows
     "tmtags"                               ; textmate
-    "tramp"                                ; emacs tramp
     "xcuserdata"                           ; xcode
     "xhtml-loader.rnc"                     ; emacs nxhtml
     "{arch}"                               ; arch - todo is this correct?
