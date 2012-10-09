@@ -192,6 +192,22 @@
     (should
      (ignoramus-matches-datafile value))))
 
+(ert-deftest ignoramus-register-datafile-03 nil
+  "Test `ignoramus-case-insensitive'"
+  (let ((value "/full/path/to/nonexistent/file_3.txt")
+        (upcase-value "/full/path/to/nonexistent/file_3.TXT"))
+    (should-not
+     (ignoramus-matches-datafile value))
+    (ignoramus-register-datafile value 'completepath)
+    (should
+     (ignoramus-matches-datafile value))
+    (let ((ignoramus-case-insensitive nil))
+      (should-not
+       (ignoramus-matches-datafile upcase-value)))
+    (let ((ignoramus-case-insensitive t))
+      (should
+       (ignoramus-matches-datafile upcase-value)))))
+
 
 ;;; ignoramus-setup
 

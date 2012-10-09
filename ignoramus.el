@@ -281,6 +281,15 @@ to supplement its lists of regular expressions."
   :type 'boolean
   :group 'ignoramus)
 
+(defcustom ignoramus-case-insensitive t
+  "Make string and regexp matches case-insensitive where possible.
+
+This affects the results from `ignoramus-boring-p' and
+`ignoramus-matches-datafile', but generally does not affect
+the behavior of other libraries configured by ignoramus."
+  :type 'boolean
+  :group 'ignoramus)
+
 ;;;###autoload
 (defgroup ignoramus-patterns nil
   "File patterns to ignore."
@@ -807,7 +816,7 @@ character for that system."
   (eval-after-load "projectile"
     '(progn
        (defun projectile-ignored-extension-p (file)
-         (let ((case-fold-search t))
+         (let ((case-fold-search ignoramus-case-insensitive))
            (string-match-p ignoramus-boring-file-regexp file))))))
 
 
@@ -832,20 +841,21 @@ This function identifies specific files used for persistence by
 tramp, semantic, woman, etc."
   (when (stringp file)
     (setq file (file-truename (expand-file-name file)))
-    (let ((file-basename (file-name-nondirectory file)))
+    (let ((file-basename (file-name-nondirectory file))
+          (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
       (catch 'known
         (dolist (basename (ignoramus--extract-strings ignoramus-datafile-basename))
-          (when (equal basename file-basename)
+          (when (equal (funcall case-convert basename) (funcall case-convert file-basename))
             (throw 'known file)))
         (dolist (completepath (ignoramus--extract-strings ignoramus-datafile-completepath))
           (when (or (file-equal-p completepath file)
-                    (equal completepath file))
+                    (equal (funcall case-convert completepath) (funcall case-convert file)))
             (throw 'known file)))
         (dolist (prefix (ignoramus--extract-strings ignoramus-datafile-prefix))
-          (when (string-prefix-p (file-truename (expand-file-name prefix)) file)
+          (when (string-prefix-p (file-truename (expand-file-name prefix)) file ignoramus-case-insensitive)
             (throw 'known file)))
         (dolist (dirprefix (ignoramus--extract-strings ignoramus-datafile-dirprefix))
-          (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file)
+          (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file ignoramus-case-insensitive)
             (throw 'known file)))))))
 
 ;;;###autoload
@@ -869,9 +879,10 @@ TYPE may be one of 'basename, 'completepath, 'prefix, or
   "Return non-nil if ignoramus thinks FILE is uninteresting."
   (unless ignoramus-boring-file-regexp
     (ignoramus-compute-common-regexps))
-  (or (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file))
-      (and ignoramus-use-known-datafiles
-           (ignoramus-matches-datafile file))))
+  (let ((case-fold-search ignoramus-case-insensitive))
+    (or (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file))
+        (and ignoramus-use-known-datafiles
+             (ignoramus-matches-datafile file)))))
 
 ;;;###autoload
 (defun ignoramus-setup (&optional actions)
