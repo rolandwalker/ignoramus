@@ -686,45 +686,6 @@ character for that system."
   (setq path (ignoramus-strip-trailing-slash path))
   (file-name-as-directory path))
 
-;; datafile functions
-(defun ignoramus-matches-datafile (file)
-  "Return non-nil if FILE is used for data storage by a known Lisp library.
-
-This function identifies specific files used for persistence by
-tramp, semantic, woman, etc."
-  (when (stringp file)
-    (setq file (file-truename (expand-file-name file)))
-    (let ((file-basename (file-name-nondirectory file)))
-      (catch 'known
-        (dolist (basename (ignoramus--extract-strings ignoramus-datafile-basename))
-          (when (equal basename file-basename)
-            (throw 'known file)))
-        (dolist (completepath (ignoramus--extract-strings ignoramus-datafile-completepath))
-          (when (or (file-equal-p completepath file)
-                    (equal completepath file))
-            (throw 'known file)))
-        (dolist (prefix (ignoramus--extract-strings ignoramus-datafile-prefix))
-          (when (string-prefix-p (file-truename (expand-file-name prefix)) file)
-            (throw 'known file)))
-        (dolist (dirprefix (ignoramus--extract-strings ignoramus-datafile-dirprefix))
-          (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file)
-            (throw 'known file)))))))
-
-(defun ignoramus-register-datafile (symbol-or-string type)
-  "Register a generated file used for data storage.
-
-This generated file will be ignored by ignoramus.
-
-SYMBOL-OR-STRING may be the name of a symbol to consult, or a
-string.  If a symbol, it should refer to a string or list of
-strings.
-
-TYPE may be one of 'basename, 'completepath, 'prefix, or
-'dirprefix."
-  (assert (memq type '(basename completepath prefix dirprefix)) nil "bad TYPE")
-  (let ((sym (intern (format "ignoramus-datafile-%s" type))))
-    (push symbol-or-string (symbol-value sym))))
-
 ;; regular expression functions
 (defun ignoramus-compute-common-regexps ()
   "Compute common regexps used by plugins."
@@ -862,6 +823,46 @@ TYPE may be one of 'basename, 'completepath, 'prefix, or
   (setq pcomplete-file-ignore ignoramus-boring-file-regexp))
 
 ;;; principal external interface
+
+;;;###autoload
+(defun ignoramus-matches-datafile (file)
+  "Return non-nil if FILE is used for data storage by a known Lisp library.
+
+This function identifies specific files used for persistence by
+tramp, semantic, woman, etc."
+  (when (stringp file)
+    (setq file (file-truename (expand-file-name file)))
+    (let ((file-basename (file-name-nondirectory file)))
+      (catch 'known
+        (dolist (basename (ignoramus--extract-strings ignoramus-datafile-basename))
+          (when (equal basename file-basename)
+            (throw 'known file)))
+        (dolist (completepath (ignoramus--extract-strings ignoramus-datafile-completepath))
+          (when (or (file-equal-p completepath file)
+                    (equal completepath file))
+            (throw 'known file)))
+        (dolist (prefix (ignoramus--extract-strings ignoramus-datafile-prefix))
+          (when (string-prefix-p (file-truename (expand-file-name prefix)) file)
+            (throw 'known file)))
+        (dolist (dirprefix (ignoramus--extract-strings ignoramus-datafile-dirprefix))
+          (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file)
+            (throw 'known file)))))))
+
+;;;###autoload
+(defun ignoramus-register-datafile (symbol-or-string type)
+  "Register a generated file used for data storage.
+
+This generated file will be ignored by ignoramus.
+
+SYMBOL-OR-STRING may be the name of a symbol to consult, or a
+string.  If a symbol, it should refer to a string or list of
+strings.
+
+TYPE may be one of 'basename, 'completepath, 'prefix, or
+'dirprefix."
+  (assert (memq type '(basename completepath prefix dirprefix)) nil "bad TYPE")
+  (let ((sym (intern (format "ignoramus-datafile-%s" type))))
+    (push symbol-or-string (symbol-value sym))))
 
 ;;;###autoload
 (defun ignoramus-boring-p (file)
