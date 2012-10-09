@@ -344,6 +344,8 @@
     ".sx64fsl"                                ; LISP
     ".synctex.gz"                             ; latex
     ".tfm"                                    ; latex
+    ".tmproj"                                 ; textmate
+    ".tmproject"                              ; textmate
     ".toc"                                    ; latex
     ".tp"                                     ; texinfo
     ".tps"                                    ; texinfo
@@ -444,8 +446,6 @@ fully-qualified pathname."
     ".sass-cache"                          ; sass
     ".scala_dependencies"                  ; scala
     ".svn"                                 ; subversion
-    ".tmproj"                              ; textmate
-    ".tmproject"                           ; textmate
     ".tox"                                 ; python
     ".wmncach.el"                          ; emacs WoMan
     ".yardoc"                              ; yard
