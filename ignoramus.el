@@ -5,8 +5,8 @@
 ;; Author: Roland Walker <walker@pobox.com>
 ;; Homepage: http://github.com/rolandwalker/ignoramus
 ;; URL: http://raw.github.com/rolandwalker/ignoramus/master/ignoramus.el
-;; Version: 0.5.1
-;; Last-Updated: 14 Sep 2012
+;; Version: 0.6.0
+;; Last-Updated:  9 Oct 2012
 ;; EmacsWiki: Ignoramus
 ;; Keywords: convenience, tools
 ;;
@@ -259,7 +259,7 @@ A directory prefix is a leading absolute path component.")
 ;;;###autoload
 (defgroup ignoramus nil
   "Ignore backups, build files, et al."
-  :version "0.5.1"
+  :version "0.6.0"
   :link '(emacs-commentary-link "ignoramus")
   :prefix "ignoramus-"
   :group 'tools
