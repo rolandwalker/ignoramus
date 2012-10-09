@@ -14,22 +14,24 @@
 
 (ert-deftest ignoramus-compute-common-regexps-01 nil
   (should (equal "\\`[abc]\\|\\`[ghi]\\'\\|j\\|k\\|l"
-                 (let ((ignoramus-file-beginnings  '("a" "b" "c"))
-                       (ignoramus-file-endings     '("d" "e" "f"))
-                       (ignoramus-file-exact-names '("g" "h" "i"))
-                       (ignoramus-file-regexps     '("j" "k" "l")))
-                   (ignoramus-compute-common-regexps)
+                 (progn
+                   (let ((ignoramus-file-beginnings  '("a" "b" "c"))
+                         (ignoramus-file-endings     '("d" "e" "f"))
+                         (ignoramus-file-exact-names '("g" "h" "i"))
+                         (ignoramus-file-regexps     '("j" "k" "l")))
+                     (ignoramus-compute-common-regexps))
                    (prog1
                        ignoramus-boring-dir-regexp
                      (ignoramus-compute-common-regexps))))))
 
 (ert-deftest ignoramus-compute-common-regexps-02 nil
    (should (equal "\\`[abc]\\|[def]\\'\\|\\`[ghi]\\'\\|j\\|k\\|l"
-                  (let ((ignoramus-file-beginnings  '("a" "b" "c"))
-                        (ignoramus-file-endings     '("d" "e" "f"))
-                        (ignoramus-file-exact-names '("g" "h" "i"))
-                        (ignoramus-file-regexps     '("j" "k" "l")))
-                    (ignoramus-compute-common-regexps)
+                  (progn
+                    (let ((ignoramus-file-beginnings  '("a" "b" "c"))
+                          (ignoramus-file-endings     '("d" "e" "f"))
+                          (ignoramus-file-exact-names '("g" "h" "i"))
+                          (ignoramus-file-regexps     '("j" "k" "l")))
+                      (ignoramus-compute-common-regexps))
                     (prog1
                         ignoramus-boring-file-regexp
                       (ignoramus-compute-common-regexps))))))
