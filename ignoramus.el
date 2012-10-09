@@ -549,6 +549,7 @@ fully-qualified pathname."
     "\\`hg-editor-[[:alnum:]]+\\.txt\\'"      ; emacs
     "\\`svn-commit\\.tmp\\'"                  ; emacs
     "\\`zshecl[0-9]+\\'"                      ; zsh
+    "\\`bash-fc-[0-9]+\\'"                    ; bash
     )
   "List of regexps matching filenames to ignore.
 
