@@ -65,9 +65,11 @@
 ;;
 ;; Notes
 ;;
-;; One function is provided to be called from Lisp:
+;; Three functions are provided to be called from Lisp:
 ;;
 ;;     `ignoramus-boring-p'
+;;     `ignoramus-register-datafile'
+;;     `ignoramus-matches-datafile'
 ;;
 ;; Compatibility and Requirements
 ;;
@@ -92,6 +94,10 @@
 ;;     Overwrites customizable variables from other libraries.
 ;;
 ;;     Hardcoded directory separator.
+;;
+;;     Different results may be obtained from the datafiles
+;;     functions depending on whether external libraries are
+;;     loaded.
 ;;
 ;; TODO
 ;;
@@ -193,6 +199,53 @@
 (defvar ignoramus-boring-file-regexp nil "A computed regexp matching uninteresting files.")
 (defvar ignoramus-boring-dir-regexp  nil "A computed regexp matching uninteresting directories.")
 
+(defvar ignoramus-datafile-basename '(
+                                      desktop-base-file-name
+                                      ".emacs.desktop.lock"
+                                      )
+  "List of symbols or strings holding file basenames used for persistence by Emacs packages.")
+
+(defvar ignoramus-datafile-completepath '(
+                                          abbrev-file-name
+                                          ac-comphist-file
+                                          bm-repository-file
+                                          bmkp-bmenu-commands-file
+                                          bmkp-bmenu-state-file
+                                          bookmark-default-file
+                                          flymake-log-file-name
+                                          guess-style-override-file
+                                          ido-save-directory-list-file
+                                          minimal-session-saver-data-file
+                                          recentf-save-file
+                                          save-place-file
+                                          savehist-file
+                                          smex-save-file
+                                          tramp-persistency-file-name
+                                          woman-cache-filename
+                                          )
+  "List of symbols or strings holding complete paths used for persistence by Emacs packages.")
+
+(defvar ignoramus-datafile-prefix '(
+                                    auto-save-list-file-prefix
+                                    )
+  "List of symbols or strings holding file prefixes used for persistence by Emacs packages.
+
+A prefix is a leading absolute path component plus leading fragment of basename.")
+
+(defvar ignoramus-datafile-dirprefix '(
+                                       ac-dictionary-directories
+                                       ede-simple-save-directory
+                                       eshell-directory-name
+                                       mail-default-directory
+                                       pcache-directory
+                                       semanticdb-default-save-directory
+                                       tramp-auto-save-directory
+                                       url-configuration-directory
+                                       )
+  "List of symbols or strings holding directory prefixes used for persistence by Emacs packages.
+
+A directory prefix is a leading absolute path component.")
+
 ;;; customizable variables
 
 ;;;###autoload
@@ -217,6 +270,15 @@
   :type `(repeat ,(append '(choice)
                           (mapcar #'(lambda (x)
                                       (list 'const x)) ignoramus-known-actions)))
+  :group 'ignoramus)
+
+(defcustom ignoramus-use-known-datafiles t
+  "Whether to read variables from other packages to recognize datafiles.
+
+When this option is set, ignoramus reads the current settings of
+variables such as `tramp-auto-save-directory' or `woman-cache-filename'
+to supplement its lists of regular expressions."
+  :type 'boolean
   :group 'ignoramus)
 
 ;;;###autoload
@@ -575,11 +637,103 @@ fully-qualified pathname."
 
 ;;; utility functions
 
+;; generic functions
+(defun ignoramus--string-or-symbol (str-or-sym)
+  "Return the string for STR-OR-SYM."
+  (cond
+    ((and (symbolp str-or-sym)
+          (boundp str-or-sym))
+     (ignoramus--string-or-symbol (symbol-value str-or-sym)))
+    ((stringp str-or-sym)
+     str-or-sym)
+    ((consp str-or-sym)
+     (mapcar 'ignoramus--string-or-symbol str-or-sym))
+    (t
+     nil)))
+
+(defun ignoramus-list-flatten (list)
+  "Flatten LIST which may contain other lists."
+  (cond
+    ((null list)
+     nil)
+    ((and (listp list)
+          (consp (car list)))
+     (append (ignoramus-list-flatten (car list)) (ignoramus-list-flatten (cdr list))))
+    ((listp list)
+     (cons (car list) (ignoramus-list-flatten (cdr list))))
+    (t
+     (list list))))
+
+(defun ignoramus--extract-strings (arg)
+  "Return a list of strings which may be contained in or referred to in ARG."
+  (delq nil
+        (ignoramus-list-flatten
+         (ignoramus--string-or-symbol arg))))
+
+(defun ignoramus-strip-trailing-slash (path)
+  "Remove any trailing slashes from directory string PATH.
+
+On non-POSIX systems, remove the appropriate directory separator
+character for that system."
+  (while (not (string-equal path (setq path (directory-file-name path)))) t)
+  path)
+
+(defun ignoramus-ensure-trailing-slash (path)
+  "Ensure that directory string PATH has a trailing slash.
+
+On non-POSIX systems, ensure the appropriate directory separator
+character for that system."
+  (setq path (ignoramus-strip-trailing-slash path))
+  (file-name-as-directory path))
+
+;; datafile functions
+(defun ignoramus-matches-datafile (file)
+  "Return non-nil if FILE is used for data storage by a known Lisp library.
+
+This function identifies specific files used for persistence by
+tramp, semantic, woman, etc."
+  (when (stringp file)
+    (setq file (file-truename (expand-file-name file)))
+    (let ((file-basename (file-name-nondirectory file)))
+      (catch 'known
+        (dolist (basename (ignoramus--extract-strings ignoramus-datafile-basename))
+          (when (equal basename file-basename)
+            (throw 'known file)))
+        (dolist (completepath (ignoramus--extract-strings ignoramus-datafile-completepath))
+          (when (or (file-equal-p completepath file)
+                    (equal completepath file))
+            (throw 'known file)))
+        (dolist (prefix (ignoramus--extract-strings ignoramus-datafile-prefix))
+          (when (string-prefix-p (file-truename (expand-file-name prefix)) file)
+            (throw 'known file)))
+        (dolist (dirprefix (ignoramus--extract-strings ignoramus-datafile-dirprefix))
+          (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file)
+            (throw 'known file)))))))
+
+(defun ignoramus-register-datafile (symbol-or-string type)
+  "Register a generated file used for data storage.
+
+This generated file will be ignored by ignoramus.
+
+SYMBOL-OR-STRING may be the name of a symbol to consult, or a
+string.  If a symbol, it should refer to a string or list of
+strings.
+
+TYPE may be one of 'basename, 'completepath, 'prefix, or
+'dirprefix."
+  (assert (memq type '(basename completepath prefix dirprefix)) nil "bad TYPE")
+  (let ((sym (intern (format "ignoramus-datafile-%s" type))))
+    (push symbol-or-string (symbol-value sym))))
+
+;; regular expression functions
 (defun ignoramus-compute-common-regexps ()
   "Compute common regexps used by plugins."
   (setq ignoramus-boring-dir-regexp ignoramus-file-basename-regexps)
   (when ignoramus-file-basename-exact-names
-    (push (concat "\\`" (regexp-opt ignoramus-file-basename-exact-names) "\\'")
+    (push (concat "\\`" (regexp-opt (append ignoramus-file-basename-exact-names
+                                            (if ignoramus-use-known-datafiles
+                                                (ignoramus--extract-strings ignoramus-datafile-basename)
+                                              nil))) "\\'")
           ignoramus-boring-dir-regexp))
   (when ignoramus-file-basename-beginnings
     (push (concat "\\`" (regexp-opt ignoramus-file-basename-beginnings))
@@ -588,7 +742,10 @@ fully-qualified pathname."
     (setq ignoramus-boring-dir-regexp (mapconcat 'identity ignoramus-boring-dir-regexp "\\|")))
   (setq ignoramus-boring-file-regexp ignoramus-file-basename-regexps)
   (when ignoramus-file-basename-exact-names
-    (push (concat "\\`" (regexp-opt ignoramus-file-basename-exact-names) "\\'")
+    (push (concat "\\`" (regexp-opt (append ignoramus-file-basename-exact-names
+                                            (if ignoramus-use-known-datafiles
+                                                (ignoramus--extract-strings ignoramus-datafile-basename)
+                                              nil))) "\\'")
           ignoramus-boring-file-regexp))
   (when ignoramus-file-basename-endings
     (push (concat       (regexp-opt ignoramus-file-basename-endings) "\\'")
@@ -604,7 +761,9 @@ fully-qualified pathname."
   "Return non-nil if ignoramus thinks FILE is uninteresting."
   (unless ignoramus-boring-file-regexp
     (ignoramus-compute-common-regexps))
-  (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file)))
+  (or (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file))
+      (and ignoramus-use-known-datafiles
+           (ignoramus-matches-datafile file))))
 
 ;;; configuration action plugins
 
@@ -748,7 +907,7 @@ actions in `ignoramus-known-actions'."
 ;; End:
 ;;
 ;; LocalWords: Ignoramus ARGS alist Howto pathname dired ignorable
-;; LocalWords: callf
+;; LocalWords: callf datafiles datafile completepath dirprefix
 ;;
 
 ;;; ignoramus.el ends here

@@ -72,9 +72,11 @@ No external dependencies
 Notes
 -----
 
-One function is provided to be called from Lisp:
+Three functions are provided to be called from Lisp:
 
 	ignoramus-boring-p
+	ignoramus-register-datafile
+	ignoramus-matches-datafile
 
 Bugs
 ----
