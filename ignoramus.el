@@ -562,15 +562,27 @@ fully-qualified pathname."
 
 (defun ignoramus-compute-common-regexps ()
   "Compute common regexps used by plugins."
-  (setq ignoramus-boring-dir-regexp (concat
-                                     "\\`" (regexp-opt ignoramus-file-beginnings)         "\\|"
-                                     "\\`" (regexp-opt ignoramus-file-exact-names) "\\'"  "\\|"
-                                     (mapconcat 'identity ignoramus-file-regexps "\\|")))
-  (setq ignoramus-boring-file-regexp (concat
-                                      "\\`" (regexp-opt ignoramus-file-beginnings)         "\\|"
-                                            (regexp-opt ignoramus-file-endings)     "\\'"  "\\|"
-                                      "\\`" (regexp-opt ignoramus-file-exact-names) "\\'"  "\\|"
-                                      (mapconcat 'identity ignoramus-file-regexps "\\|"))))
+  (setq ignoramus-boring-dir-regexp ignoramus-file-regexps)
+  (when ignoramus-file-exact-names
+    (push (concat "\\`" (regexp-opt ignoramus-file-exact-names) "\\'")
+          ignoramus-boring-dir-regexp))
+  (when ignoramus-file-beginnings
+    (push (concat "\\`" (regexp-opt ignoramus-file-beginnings))
+          ignoramus-boring-dir-regexp))
+  (when ignoramus-boring-dir-regexp
+    (setq ignoramus-boring-dir-regexp (mapconcat 'identity ignoramus-boring-dir-regexp "\\|")))
+  (setq ignoramus-boring-file-regexp ignoramus-file-regexps)
+  (when ignoramus-file-exact-names
+    (push (concat "\\`" (regexp-opt ignoramus-file-exact-names) "\\'")
+          ignoramus-boring-file-regexp))
+  (when ignoramus-file-endings
+    (push (concat       (regexp-opt ignoramus-file-endings) "\\'")
+          ignoramus-boring-file-regexp))
+  (when ignoramus-file-beginnings
+    (push (concat "\\`" (regexp-opt ignoramus-file-beginnings))
+          ignoramus-boring-file-regexp))
+  (when ignoramus-boring-file-regexp
+    (setq ignoramus-boring-file-regexp (mapconcat 'identity ignoramus-boring-file-regexp "\\|"))))
 
 ;;;###autoload
 (defun ignoramus-boring-p (file)
