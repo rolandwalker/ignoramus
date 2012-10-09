@@ -756,14 +756,6 @@ TYPE may be one of 'basename, 'completepath, 'prefix, or
   (when ignoramus-boring-file-regexp
     (setq ignoramus-boring-file-regexp (mapconcat 'identity ignoramus-boring-file-regexp "\\|"))))
 
-;;;###autoload
-(defun ignoramus-boring-p (file)
-  "Return non-nil if ignoramus thinks FILE is uninteresting."
-  (unless ignoramus-boring-file-regexp
-    (ignoramus-compute-common-regexps))
-  (or (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file))
-      (and ignoramus-use-known-datafiles
-           (ignoramus-matches-datafile file))))
 
 ;;; configuration action plugins
 
@@ -870,6 +862,15 @@ TYPE may be one of 'basename, 'completepath, 'prefix, or
   (setq pcomplete-file-ignore ignoramus-boring-file-regexp))
 
 ;;; principal external interface
+
+;;;###autoload
+(defun ignoramus-boring-p (file)
+  "Return non-nil if ignoramus thinks FILE is uninteresting."
+  (unless ignoramus-boring-file-regexp
+    (ignoramus-compute-common-regexps))
+  (or (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file))
+      (and ignoramus-use-known-datafiles
+           (ignoramus-matches-datafile file))))
 
 ;;;###autoload
 (defun ignoramus-setup (&optional actions)
