@@ -9,6 +9,10 @@
   (should
    (ignoramus-boring-p "filename~")))
 
+(ert-deftest ignoramus-boring-p-02 nil
+  (should-not
+   (ignoramus-boring-p "filename.el")))
+
 
 ;;; ignoramus-compute-common-regexps
 
