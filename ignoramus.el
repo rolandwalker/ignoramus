@@ -557,6 +557,7 @@ fully-qualified pathname."
     "build"                                ; various
     "Build"                                ; various
     "Build.bat"                            ; perl
+    "COMMIT_EDITMSG"                       ; git
     "cmake_install.cmake"                  ; cmake
     "CMakeCache.txt"                       ; cmake
     "CMakeFiles"                           ; cmake
@@ -575,6 +576,7 @@ fully-qualified pathname."
     "DerivedData"                          ; xcode
     "Desktop.ini"                          ; ms-windows
     "ehthumbs.db"                          ; ms-windows
+    "git-rebase-todo"                      ; git
     "gwt-unitCache"                        ; gwt
     "gwt_bree"                             ; gwt
     "install-sh"                           ; automake
@@ -583,6 +585,7 @@ fully-qualified pathname."
     "Makefile.in"                          ; automake
     "MCVS"                                 ; meta-CVS
     "META.yml"                             ; perl
+    "MERGE_MSG"                            ; git
     "minimal-session-saver-data.el"        ; emacs minimal-session-saver
     "MYMETA.yml"                           ; perl
     "nbbuild"                              ; netbeans
@@ -597,6 +600,7 @@ fully-qualified pathname."
     "SCCS"                                 ; SCCS
     "Session.vim"                          ; vim
     "slprj"                                ; matlab
+    "SQUASH_MSG"                           ; git
     "TAGS"                                 ; ctags/etags
     "tags"                                 ; ctags/etags
     "TestResult"                           ; visualstudio
