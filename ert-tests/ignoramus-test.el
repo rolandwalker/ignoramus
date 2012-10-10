@@ -184,6 +184,9 @@
      (ignoramus-matches-datafile value))
     (ignoramus-register-datafile value 'completepath)
     (should
+     (ignoramus-matches-datafile value))
+    (ignoramus-register-datafile value 'completepath 'unregister)
+    (should-not
      (ignoramus-matches-datafile value))))
 
 (ert-deftest ignoramus-register-datafile-02 nil
@@ -194,6 +197,9 @@
      (ignoramus-matches-datafile value))
     (ignoramus-register-datafile sym 'completepath)
     (should
+     (ignoramus-matches-datafile value))
+    (ignoramus-register-datafile sym 'completepath 'unregister)
+    (should-not
      (ignoramus-matches-datafile value))))
 
 (ert-deftest ignoramus-register-datafile-03 nil
@@ -210,7 +216,10 @@
        (ignoramus-matches-datafile upcase-value)))
     (let ((ignoramus-case-insensitive t))
       (should
-       (ignoramus-matches-datafile upcase-value)))))
+       (ignoramus-matches-datafile upcase-value)))
+    (ignoramus-register-datafile value 'completepath 'unregister)
+    (should-not
+     (ignoramus-matches-datafile value))))
 
 
 ;;; ignoramus-setup

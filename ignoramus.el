@@ -879,7 +879,7 @@ tramp, semantic, woman, etc."
             (throw 'known file)))))))
 
 ;;;###autoload
-(defun ignoramus-register-datafile (symbol-or-string type)
+(defun ignoramus-register-datafile (symbol-or-string type &optional unregister)
   "Register a generated file used for data storage.
 
 This generated file will be ignored by ignoramus.
@@ -889,10 +889,16 @@ string.  If a symbol, it should refer to a string or list of
 strings.
 
 TYPE may be one of 'basename, 'completepath, 'prefix, or
-'dirprefix."
+'dirprefix.
+
+Optional UNREGISTER tells ignoramus to forget about
+SYMBOL-OR-STRING."
   (assert (memq type '(basename completepath prefix dirprefix)) nil "bad TYPE")
   (let ((sym (intern (format "ignoramus-datafile-%s" type))))
-    (push symbol-or-string (symbol-value sym))))
+    (if unregister
+        (set sym (delete symbol-or-string (symbol-value sym)))
+      ;; else
+      (push symbol-or-string (symbol-value sym)))))
 
 ;;;###autoload
 (defun ignoramus-boring-p (file)
