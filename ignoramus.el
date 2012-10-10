@@ -156,6 +156,7 @@
 (require 'cl)
 
 (declare-function dired-omit-mode "dired-x.el")
+(declare-function file-equal-p    "files.el")
 
 (eval-when-compile
   ;; declarations for byte compiler
@@ -643,6 +644,21 @@ The string to match comprises only the last element of a
 fully-qualified pathname."
   :type '(repeat regexp)
   :group 'ignoramus-patterns)
+
+;;; compatibility functions
+(unless (fboundp 'file-equal-p)
+  ;; added in GNU Emacs 24.x
+  (defun file-equal-p (file1 file2)
+    "Return non-nil if files FILE1 and FILE2 name the same file.
+If FILE1 or FILE2 does not exist, the return value is unspecified."
+    (let ((handler (or (find-file-name-handler file1 'file-equal-p)
+                       (find-file-name-handler file2 'file-equal-p))))
+      (if handler
+          (funcall handler 'file-equal-p file1 file2)
+        (let (f1-attr f2-attr)
+          (and (setq f1-attr (file-attributes (file-truename file1)))
+               (setq f2-attr (file-attributes (file-truename file2)))
+               (equal f1-attr f2-attr)))))))
 
 ;;; utility functions
 
