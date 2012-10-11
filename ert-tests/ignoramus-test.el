@@ -200,7 +200,7 @@
             (ignoramus--string-or-symbol symbol)))))
 
 
-;;; ignoramus--extract-strings -- todo
+;;; ignoramus--extract-strings
 
 (ert-deftest ignoramus:b-ignoramus--extract-strings-01 nil
   (let ((symbol "string"))
