@@ -709,9 +709,9 @@ Also identify bogons."
 
 (defun ignoramus--extract-strings (arg)
   "Return a list of strings which may be contained in or referred to in ARG."
-  (delq nil
-        (ignoramus-list-flatten
-         (ignoramus--string-or-symbol arg))))
+  (remove-if-not 'stringp
+                 (ignoramus-list-flatten
+                  (ignoramus--string-or-symbol arg))))
 
 (defun ignoramus-strip-trailing-slash (path)
   "Remove any trailing slashes from directory string PATH.
