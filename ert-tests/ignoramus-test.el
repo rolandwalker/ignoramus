@@ -345,62 +345,6 @@
                (eq 0 (nth 7 (file-attributes recentf-save-file))))
       (delete-file recentf-save-file))))
 
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01a-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" recentf-save-file))
-
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01b-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" (ignoramus--extract-strings ignoramus-datafile-completepath)))
-
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01c-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (let* ((file (file-truename (expand-file-name recentf-save-file)))
-         (file-basename (file-name-nondirectory file))
-         (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
-    (error "%s" (list file file-basename case-convert))))
-
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01d-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (let* ((file (file-truename (expand-file-name recentf-save-file)))
-         (file-basename (file-name-nondirectory file))
-         (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
-    (error "%s" (catch 'known
-                  (dolist (basename (ignoramus--extract-strings ignoramus-datafile-basename))
-                    (when (equal (funcall case-convert basename) (funcall case-convert file-basename))
-                      (throw 'known (list file 'basename basename file-basename))))))))
-
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01e-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (let* ((file (file-truename (expand-file-name recentf-save-file)))
-         (file-basename (file-name-nondirectory file))
-         (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
-    (error "%s" (catch 'known
-                  (dolist (completepath (ignoramus--extract-strings ignoramus-datafile-completepath))
-                    (when (or (file-equal-p completepath file)
-                              (equal (funcall case-convert completepath) (funcall case-convert file)))
-                      (throw 'known (list file 'completepath completepath file))))))))
-
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01f-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (let* ((file (file-truename (expand-file-name recentf-save-file)))
-         (file-basename (file-name-nondirectory file))
-         (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
-    (error "%s" (catch 'known
-                  (dolist (prefix (ignoramus--extract-strings ignoramus-datafile-prefix))
-                    (when (string-prefix-p (file-truename (expand-file-name prefix)) file ignoramus-case-insensitive)
-                      (throw 'known (list file 'prefix (file-truename (expand-file-name prefix)) file))))))))
-
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-01g-bogus nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (let* ((file (file-truename (expand-file-name recentf-save-file)))
-         (file-basename (file-name-nondirectory file))
-         (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
-    (error "%s" (catch 'known
-                  (dolist (dirprefix (ignoramus--extract-strings ignoramus-datafile-dirprefix))
-                    (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file ignoramus-case-insensitive)
-                      (throw 'known (list file 'dirprefix (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file))))))))
-
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-02 nil
   "should still match when file does not exist"
   (let ((recentf-save-file "~/.recentf-but-nonexistent-file"))
