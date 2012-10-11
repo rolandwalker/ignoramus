@@ -243,34 +243,34 @@
 ;;; ignoramus--extract-pathstrings
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-01 nil
-  (let ((symbol "nonexistent_file"))
+  (let ((value "nonexistent_file"))
     (should
-     (equal (list (expand-file-name symbol default-directory))
-            (ignoramus--extract-pathstrings symbol)))))
+     (equal (list (expand-file-name value default-directory))
+            (ignoramus--extract-pathstrings value)))))
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-02 nil
   "Returns nil because the path is too inclusive"
-  (let ((symbol "/"))
+  (let ((value "/"))
     (should-not
-     (ignoramus--extract-pathstrings symbol))))
+     (ignoramus--extract-pathstrings value))))
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-03 nil
   "Returns nil because the path is too inclusive"
-  (let ((symbol "~/"))
+  (let ((value "~/"))
     (should-not
-     (ignoramus--extract-pathstrings symbol))))
+     (ignoramus--extract-pathstrings value))))
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-04 nil
-  (let ((symbol "/Volumes"))
+  (let ((value "/Volumes"))
     (should
-     (equal (list symbol)
-            (ignoramus--extract-pathstrings symbol)))))
+     (equal (list value)
+            (ignoramus--extract-pathstrings value)))))
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-05 nil
-  (let ((symbol "~/.recentf"))
+  (let ((value "~/.recentf"))
     (should
-     (equal (list (file-truename (expand-file-name symbol)))
-            (ignoramus--extract-pathstrings symbol)))))
+     (equal (list (file-truename (expand-file-name value)))
+            (ignoramus--extract-pathstrings value)))))
 
 
 ;;; ignoramus-list-flatten
