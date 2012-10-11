@@ -8,19 +8,19 @@
 
 (ert-deftest ignoramus:a-bogus-test-01 nil
   :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error (ignoramus--extract-strings ignoramus-datafile-basename)))
+  (error "%s" (ignoramus--extract-strings ignoramus-datafile-basename)))
 
 (ert-deftest ignoramus:a-bogus-test-02 nil
   :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error (ignoramus--extract-strings ignoramus-datafile-completepath)))
+  (error "%s" (ignoramus--extract-strings ignoramus-datafile-completepath)))
 
 (ert-deftest ignoramus:a-bogus-test-03 nil
   :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error (ignoramus--extract-strings ignoramus-datafile-prefix)))
+  (error "%s" (ignoramus--extract-strings ignoramus-datafile-prefix)))
 
 (ert-deftest ignoramus:a-bogus-test-04 nil
   :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error (ignoramus--extract-strings ignoramus-datafile-dirprefix)))
+  (error "%s" (ignoramus--extract-strings ignoramus-datafile-dirprefix)))
 
 
 ;;; working-directory
