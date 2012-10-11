@@ -667,12 +667,27 @@ If FILE1 or FILE2 does not exist, the return value is unspecified."
 ;;; utility functions
 
 ;; generic functions
+
+(defun ignoramus--overly-broad-path-p (str-val)
+  "Identify path elements which would match too broadly to be useful.
+
+Also identify bogons."
+  (or (not (string-match-p "[^ ]" str-val))
+      (string-match-p "\\`/*\\'" str-val)
+      (string-match-p "\\`~/*\\'" str-val)
+      (string-match-p (downcase (concat "\\`" (getenv "HOME") "/*\\'")) (downcase str-val))
+      (file-equal-p "~/" (file-name-as-directory str-val))
+      (file-equal-p "/" (file-name-as-directory str-val))))
+
 (defun ignoramus--string-or-symbol (str-or-sym)
   "Return the string for STR-OR-SYM."
   (cond
     ((and (symbolp str-or-sym)
           (boundp str-or-sym))
      (ignoramus--string-or-symbol (symbol-value str-or-sym)))
+    ((and (stringp str-or-sym)
+          (ignoramus--overly-broad-path-p str-or-sym))
+     nil)
     ((stringp str-or-sym)
      str-or-sym)
     ((consp str-or-sym)
