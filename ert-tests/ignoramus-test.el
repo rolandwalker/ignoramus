@@ -295,7 +295,19 @@
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-01 nil
   (require 'recentf)
   (should
+   (featurep 'recentf))
+  (should
+   recentf-save-file)
+  (should
    (ignoramus-matches-datafile recentf-save-file)))
+
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-01a-bogus nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" recentf-save-file))
+
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-01b-bogus nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" (ignoramus--extract-strings ignoramus-datafile-completepath)))
 
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-02 nil
   (let ((file "filename~"))
