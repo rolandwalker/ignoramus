@@ -245,7 +245,7 @@
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-01 nil
   (let ((symbol "nonexistent_file"))
     (should
-     (equal (list (concat default-directory symbol))
+     (equal (list (expand-file-name symbol default-directory))
             (ignoramus--extract-pathstrings symbol)))))
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-02 nil
