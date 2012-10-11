@@ -237,7 +237,6 @@ A prefix is a leading absolute path component plus leading fragment of basename.
                                        ac-dictionary-directories
                                        ede-simple-save-directory
                                        eshell-directory-name
-                                       mail-default-directory
                                        pcache-directory
                                        semanticdb-default-save-directory
                                        tramp-auto-save-directory
