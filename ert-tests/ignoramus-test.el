@@ -4,57 +4,6 @@
 (require 'ignoramus)
 
 
-;;; bogus tests for tracing
-
-(ert-deftest ignoramus:a-bogus-test-01 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" (ignoramus--extract-strings ignoramus-datafile-basename)))
-
-(ert-deftest ignoramus:a-bogus-test-02 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" (ignoramus--extract-strings ignoramus-datafile-completepath)))
-
-(ert-deftest ignoramus:a-bogus-test-03 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" (ignoramus--extract-strings ignoramus-datafile-prefix)))
-
-(ert-deftest ignoramus:a-bogus-test-04 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" (ignoramus--extract-strings ignoramus-datafile-dirprefix)))
-
-(ert-deftest ignoramus:a-bogus-test-05 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" ac-dictionary-directories))
-
-(ert-deftest ignoramus:a-bogus-test-06 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" ede-simple-save-directory))
-
-(ert-deftest ignoramus:a-bogus-test-07 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" eshell-directory-name))
-
-(ert-deftest ignoramus:a-bogus-test-08 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" mail-default-directory))
-
-(ert-deftest ignoramus:a-bogus-test-09 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" pcache-directory))
-
-(ert-deftest ignoramus:a-bogus-test-10 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" semanticdb-default-save-directory))
-
-(ert-deftest ignoramus:a-bogus-test-11 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" tramp-auto-save-directory))
-
-(ert-deftest ignoramus:a-bogus-test-12 nil
-  :expected-result (if (getenv "TRAVIS") :passed :failed)
-  (error "%s" url-configuration-directory))
-
-
 ;;; working-directory
 
 (ert-deftest ignoramus:a-ignoramus-working-directory-01 nil
