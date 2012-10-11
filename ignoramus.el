@@ -674,7 +674,7 @@ Also identify bogons."
   (or (not (string-match-p "[^ ]" str-val))
       (string-match-p "\\`/*\\'" str-val)
       (string-match-p "\\`~/*\\'" str-val)
-      (string-match-p (downcase (concat "\\`" (getenv "HOME") "/*\\'")) (downcase str-val))
+      (string-match-p (downcase (concat "\\`" (expand-file-name "~") "/*\\'")) (downcase str-val))
       (file-equal-p "~/" (file-name-as-directory str-val))
       (file-equal-p "/" (file-name-as-directory str-val))))
 
