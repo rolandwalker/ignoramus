@@ -22,6 +22,38 @@
   :expected-result (if (getenv "TRAVIS") :passed :failed)
   (error "%s" (ignoramus--extract-strings ignoramus-datafile-dirprefix)))
 
+(ert-deftest ignoramus:a-bogus-test-05 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" ac-dictionary-directories))
+
+(ert-deftest ignoramus:a-bogus-test-06 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" ede-simple-save-directory))
+
+(ert-deftest ignoramus:a-bogus-test-07 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" eshell-directory-name))
+
+(ert-deftest ignoramus:a-bogus-test-08 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" mail-default-directory))
+
+(ert-deftest ignoramus:a-bogus-test-09 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" pcache-directory))
+
+(ert-deftest ignoramus:a-bogus-test-10 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" semanticdb-default-save-directory))
+
+(ert-deftest ignoramus:a-bogus-test-11 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" tramp-auto-save-directory))
+
+(ert-deftest ignoramus:a-bogus-test-12 nil
+  :expected-result (if (getenv "TRAVIS") :passed :failed)
+  (error "%s" url-configuration-directory))
+
 
 ;;; working-directory
 
