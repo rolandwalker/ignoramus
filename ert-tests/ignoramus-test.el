@@ -13,6 +13,7 @@
   (should
    (string-match-p "/ert-tests/\\'" default-directory)))
 
+
 ;;; ignoramus-boring-p
 
 (ert-deftest ignoramus:b-ignoramus-boring-p-01 nil
