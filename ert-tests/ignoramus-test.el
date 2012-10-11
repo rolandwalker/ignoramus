@@ -327,13 +327,23 @@
 ;;; ignoramus-matches-datafile - todo test every TYPE
 
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-01 nil
-  (require 'recentf)
-  (should
-   (featurep 'recentf))
-  (should
-   (stringp recentf-save-file))
-  (should
-   (ignoramus-matches-datafile recentf-save-file)))
+  (let ((file-cleanup nil))
+    (require 'recentf)
+    (should
+     (featurep 'recentf))
+    (should
+     (stringp recentf-save-file))
+    (unless (file-exists-p recentf-save-file)
+      (setq file-cleanup t)
+      (with-temp-buffer
+        (write-file recentf-save-file)))
+    (should
+     (file-exists-p recentf-save-file))
+    (should
+     (ignoramus-matches-datafile recentf-save-file))
+    (when (and file-cleanup
+               (eq 0 (nth 7 (file-attributes recentf-save-file))))
+      (delete-file recentf-save-file))))
 
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-01a-bogus nil
   :expected-result (if (getenv "TRAVIS") :passed :failed)
@@ -392,26 +402,34 @@
                       (throw 'known (list file 'dirprefix (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file))))))))
 
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-02 nil
+  "should still match when file does not exist"
+  (let ((recentf-save-file "~/.recentf-but-nonexistent-file"))
+    (should-not
+     (file-exists-p recentf-save-file))
+    (should
+     (ignoramus-matches-datafile recentf-save-file))))
+
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-03 nil
   (let ((file "filename~"))
     (should-not
      (ignoramus-matches-datafile file))))
 
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-03 nil
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-04 nil
   (let ((file "filename.el"))
     (should-not
      (ignoramus-matches-datafile file))))
 
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-04 nil
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-05 nil
   (let ((file "script.sh"))
     (should-not
      (ignoramus-matches-datafile file))))
 
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-05 nil
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-06 nil
   (let ((file "script.sh.bak"))
     (should-not
      (ignoramus-matches-datafile file))))
 
-(ert-deftest ignoramus:b-ignoramus-matches-datafile-06 nil
+(ert-deftest ignoramus:b-ignoramus-matches-datafile-07 nil
   (let ((file "ignoramus-test.el"))
     (should-not
      (ignoramus-matches-datafile file))))
