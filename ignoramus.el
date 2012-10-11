@@ -713,6 +713,12 @@ Also identify bogons."
                  (ignoramus-list-flatten
                   (ignoramus--string-or-symbol arg))))
 
+(defun ignoramus--extract-pathstrings (arg)
+  "Return a list of path strings which may be contained in or referred to in ARG."
+  (mapcar 'file-truename
+      (mapcar 'expand-file-name
+         (ignoramus--extract-strings arg))))
+
 (defun ignoramus-strip-trailing-slash (path)
   "Remove any trailing slashes from directory string PATH.
 
@@ -881,14 +887,14 @@ tramp, semantic, woman, etc."
         (dolist (basename (ignoramus--extract-strings ignoramus-datafile-basename))
           (when (equal (funcall case-convert basename) (funcall case-convert file-basename))
             (throw 'known (list file 'basename basename file-basename))))
-        (dolist (completepath (ignoramus--extract-strings ignoramus-datafile-completepath))
+        (dolist (completepath (ignoramus--extract-pathstrings ignoramus-datafile-completepath))
           (when (or (file-equal-p completepath file)
                     (equal (funcall case-convert completepath) (funcall case-convert file)))
             (throw 'known (list file 'completepath completepath file))))
-        (dolist (prefix (ignoramus--extract-strings ignoramus-datafile-prefix))
+        (dolist (prefix (ignoramus--extract-pathstrings ignoramus-datafile-prefix))
           (when (string-prefix-p (file-truename (expand-file-name prefix)) file ignoramus-case-insensitive)
             (throw 'known (list file 'prefix (file-truename (expand-file-name prefix)) file))))
-        (dolist (dirprefix (ignoramus--extract-strings ignoramus-datafile-dirprefix))
+        (dolist (dirprefix (ignoramus--extract-pathstrings ignoramus-datafile-dirprefix))
           (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file ignoramus-case-insensitive)
             (throw 'known (list file 'dirprefix (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file))))))))
 

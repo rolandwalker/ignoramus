@@ -240,6 +240,39 @@
             (ignoramus--extract-strings symbol)))))
 
 
+;;; ignoramus--extract-pathstrings
+
+(ert-deftest ignoramus:b-ignoramus--extract-pathstrings-01 nil
+  (let ((symbol "nonexistent_file"))
+    (should
+     (equal (list (concat default-directory symbol))
+            (ignoramus--extract-pathstrings symbol)))))
+
+(ert-deftest ignoramus:b-ignoramus--extract-pathstrings-02 nil
+  "Returns nil because the path is too inclusive"
+  (let ((symbol "/"))
+    (should-not
+     (ignoramus--extract-pathstrings symbol))))
+
+(ert-deftest ignoramus:b-ignoramus--extract-pathstrings-03 nil
+  "Returns nil because the path is too inclusive"
+  (let ((symbol "~/"))
+    (should-not
+     (ignoramus--extract-pathstrings symbol))))
+
+(ert-deftest ignoramus:b-ignoramus--extract-pathstrings-04 nil
+  (let ((symbol "/Volumes"))
+    (should
+     (equal (list symbol)
+            (ignoramus--extract-pathstrings symbol)))))
+
+(ert-deftest ignoramus:b-ignoramus--extract-pathstrings-05 nil
+  (let ((symbol "~/.recentf"))
+    (should
+     (equal (list (file-truename (expand-file-name symbol)))
+            (ignoramus--extract-pathstrings symbol)))))
+
+
 ;;; ignoramus-list-flatten
 
 (ert-deftest ignoramus:b-ignoramus-list-flatten-01 nil
