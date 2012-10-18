@@ -331,6 +331,7 @@
     (require 'recentf)
     (should
      (featurep 'recentf))
+    (ignoramus-compute-common-regexps)
     (should
      (stringp recentf-save-file))
     (unless (file-exists-p recentf-save-file)
@@ -348,6 +349,7 @@
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-02 nil
   "should still match when file does not exist"
   (let ((recentf-save-file "~/.recentf-but-nonexistent-file"))
+    (ignoramus-compute-common-regexps)
     (should-not
      (file-exists-p recentf-save-file))
     (should
