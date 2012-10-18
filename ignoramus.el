@@ -155,11 +155,13 @@
 ;; for callf
 (require 'cl)
 
-(declare-function dired-omit-mode "dired-x.el")
-(declare-function file-equal-p    "files.el")
+(autoload 'dired-omit-mode "dired-x" "Toggle omission of uninteresting files in Dired (Dired-Omit mode)." t)
+
+;;; declarations
+
+(declare-function file-equal-p "files.el")
 
 (eval-when-compile
-  ;; declarations for byte compiler
   (defvar dired-garbage-files-regexp)
   (defvar dired-omit-extensions)
   (defvar dired-omit-files)
