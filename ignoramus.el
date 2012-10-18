@@ -159,8 +159,6 @@
 
 ;;; declarations
 
-(declare-function file-equal-p "files.el")
-
 (eval-when-compile
   (defvar dired-garbage-files-regexp)
   (defvar dired-omit-extensions)
@@ -650,21 +648,6 @@ fully-qualified pathname."
   :type '(repeat regexp)
   :group 'ignoramus-patterns)
 
-;;; compatibility functions
-(unless (fboundp 'file-equal-p)
-  ;; added in GNU Emacs 24.x
-  (defun file-equal-p (file1 file2)
-    "Return non-nil if files FILE1 and FILE2 name the same file.
-If FILE1 or FILE2 does not exist, the return value is unspecified."
-    (let ((handler (or (find-file-name-handler file1 'file-equal-p)
-                       (find-file-name-handler file2 'file-equal-p))))
-      (if handler
-          (funcall handler 'file-equal-p file1 file2)
-        (let (f1-attr f2-attr)
-          (and (setq f1-attr (file-attributes (file-truename file1)))
-               (setq f2-attr (file-attributes (file-truename file2)))
-               (equal f1-attr f2-attr)))))))
-
 ;;; utility functions
 
 ;; generic functions
@@ -676,9 +659,7 @@ Also identify bogons."
   (or (not (string-match-p "[^ ]" str-val))
       (string-match-p "\\`/*\\'" str-val)
       (string-match-p "\\`~/*\\'" str-val)
-      (string-match-p (downcase (concat "\\`" (expand-file-name "~") "/*\\'")) (downcase str-val))
-      (file-equal-p "~/" (file-name-as-directory str-val))
-      (file-equal-p "/" (file-name-as-directory str-val))))
+      (string-match-p (downcase (concat "\\`" (expand-file-name "~") "/*\\'")) (downcase str-val))))
 
 (defun ignoramus--string-or-symbol (str-or-sym)
   "Return the string for STR-OR-SYM."
@@ -717,9 +698,8 @@ Also identify bogons."
 
 (defun ignoramus--extract-pathstrings (arg)
   "Return a list of path strings which may be contained in or referred to in ARG."
-  (mapcar 'file-truename
-      (mapcar 'expand-file-name
-         (ignoramus--extract-strings arg))))
+  (mapcar 'expand-file-name
+          (ignoramus--extract-strings arg)))
 
 (defun ignoramus-strip-trailing-slash (path)
   "Remove any trailing slashes from directory string PATH.
@@ -882,7 +862,7 @@ character for that system."
 This function identifies specific files used for persistence by
 tramp, semantic, woman, etc."
   (when (stringp file)
-    (setq file (file-truename (expand-file-name file)))
+    (setq file (expand-file-name file))
     (let ((file-basename (file-name-nondirectory file))
           (case-convert (if ignoramus-case-insensitive 'downcase 'identity)))
       (catch 'known
@@ -890,15 +870,14 @@ tramp, semantic, woman, etc."
           (when (equal (funcall case-convert basename) (funcall case-convert file-basename))
             (throw 'known (list file 'basename basename file-basename))))
         (dolist (completepath (ignoramus--extract-pathstrings ignoramus-datafile-completepath))
-          (when (or (file-equal-p completepath file)
-                    (equal (funcall case-convert completepath) (funcall case-convert file)))
+          (when (equal (funcall case-convert completepath) (funcall case-convert file))
             (throw 'known (list file 'completepath completepath file))))
         (dolist (prefix (ignoramus--extract-pathstrings ignoramus-datafile-prefix))
-          (when (string-prefix-p (file-truename (expand-file-name prefix)) file ignoramus-case-insensitive)
-            (throw 'known (list file 'prefix (file-truename (expand-file-name prefix)) file))))
+          (when (string-prefix-p (expand-file-name prefix) file ignoramus-case-insensitive)
+            (throw 'known (list file 'prefix (expand-file-name prefix) file))))
         (dolist (dirprefix (ignoramus--extract-pathstrings ignoramus-datafile-dirprefix))
-          (when (string-prefix-p (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file ignoramus-case-insensitive)
-            (throw 'known (list file 'dirprefix (ignoramus-ensure-trailing-slash (file-truename (expand-file-name dirprefix))) file))))))))
+          (when (string-prefix-p (ignoramus-ensure-trailing-slash (expand-file-name dirprefix)) file ignoramus-case-insensitive)
+            (throw 'known (list file 'dirprefix (ignoramus-ensure-trailing-slash (expand-file-name dirprefix)) file))))))))
 
 ;;;###autoload
 (defun ignoramus-register-datafile (symbol-or-string type &optional unregister)
