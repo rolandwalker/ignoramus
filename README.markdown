@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/rolandwalker/ignoramus.png)](http://travis-ci.org/rolandwalker/ignoramus)
+[![Build Status](https://secure.travis-ci.org/rolandwalker/ignoramus.png?branch=master)](http://travis-ci.org/rolandwalker/ignoramus)
 
 Overview
 ========
