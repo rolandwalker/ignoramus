@@ -272,7 +272,9 @@ A directory prefix is a leading absolute path component.")
 (defgroup ignoramus nil
   "Ignore backups, build files, et al."
   :version "0.6.4"
-  :link '(emacs-commentary-link "ignoramus")
+  :link '(emacs-commentary-link :tag "Commentary" "ignoramus")
+  :link '(url-link :tag "Github" "http://github.com/rolandwalker/ignoramus")
+  :link '(url-link :tag "EmacsWiki" "http://emacswiki.org/emacs/Ignoramus")
   :prefix "ignoramus-"
   :group 'tools
   :group 'convenience)
