@@ -678,6 +678,8 @@ Also identify bogons."
 (defun ignoramus--string-or-symbol (str-or-sym)
   "Return the string for STR-OR-SYM."
   (cond
+    ((null str-or-sym)
+     nil)
     ((and (symbolp str-or-sym)
           (boundp str-or-sym))
      (ignoramus--string-or-symbol (symbol-value str-or-sym)))
