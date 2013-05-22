@@ -443,6 +443,7 @@ the behavior of other libraries configured by ignoramus."
     ".sx32fsl"                                ; LISP
     ".sx64fsl"                                ; LISP
     ".synctex.gz"                             ; latex
+    ".ttc"                                    ; template toolkit
     ".tfm"                                    ; latex
     ".tmproj"                                 ; textmate
     ".tmproject"                              ; textmate
