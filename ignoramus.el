@@ -606,6 +606,8 @@ fully-qualified pathname."
     "nbbuild"                              ; netbeans
     "nbdist"                               ; netbeans
     "nosetests.xml"                        ; python
+    "nytprof"                              ; perl
+    "nytprof.out"                          ; perl
     "pm_to_blib"                           ; perl
     "Profile"                              ; various
     "profile"                              ; various
