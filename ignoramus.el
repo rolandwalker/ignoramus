@@ -597,6 +597,7 @@ fully-qualified pathname."
     "install_manifest.txt"                 ; cmake
     "InstalledFiles"                       ; ruby
     "Makefile.in"                          ; automake
+    "Makefile.old"                         ; perl
     "MCVS"                                 ; meta-CVS
     "META.yml"                             ; perl
     "MERGE_MSG"                            ; git
