@@ -608,6 +608,7 @@ fully-qualified pathname."
     "nosetests.xml"                        ; python
     "nytprof"                              ; perl
     "nytprof.out"                          ; perl
+    "perltidy.ERR"                         ; perl
     "pm_to_blib"                           ; perl
     "Profile"                              ; various
     "profile"                              ; various
