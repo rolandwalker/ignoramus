@@ -622,6 +622,7 @@ fully-qualified pathname."
     "slprj"                                ; matlab
     "SQUASH_MSG"                           ; git
     "TAGS"                                 ; ctags/etags
+    "TAG_EDITMSG"                          ; git
     "tags"                                 ; ctags/etags
     "TestResult"                           ; visualstudio
     "testresult"                           ; visualstudio
