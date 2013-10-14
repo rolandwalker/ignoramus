@@ -541,6 +541,7 @@ fully-qualified pathname."
     ".pc"                                  ; quilt
     ".project"                             ; eclipse
     ".projectile"                          ; emacs projectile
+    ".prove"                               ; perl
     ".recentf"                             ; emacs recentf
     ".redcar"                              ; redcar
     ".rspec"                               ; rails
