@@ -542,6 +542,7 @@ fully-qualified pathname."
     ".project"                             ; eclipse
     ".projectile"                          ; emacs projectile
     ".prove"                               ; perl
+    ".puppet-bak"                          ; puppet
     ".recentf"                             ; emacs recentf
     ".redcar"                              ; redcar
     ".rspec"                               ; rails
