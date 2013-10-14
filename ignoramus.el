@@ -783,10 +783,11 @@ character for that system."
           ignoramus-boring-file-regexp))
   (when ignoramus-boring-file-regexp
     (setq ignoramus-boring-file-regexp (mapconcat 'identity ignoramus-boring-file-regexp "\\|")))
-  (setq ignoramus-datafile-computed-basenames (ignoramus--extract-strings ignoramus-datafile-basename))
+
+  (setq ignoramus-datafile-computed-basenames     (ignoramus--extract-strings ignoramus-datafile-basename))
   (setq ignoramus-datafile-computed-completepaths (ignoramus--extract-pathstrings ignoramus-datafile-completepath))
-  (setq ignoramus-datafile-computed-prefixes (ignoramus--extract-pathstrings ignoramus-datafile-prefix))
-  (setq ignoramus-datafile-computed-dirprefixes (mapcar 'ignoramus-ensure-trailing-slash
+  (setq ignoramus-datafile-computed-prefixes      (ignoramus--extract-pathstrings ignoramus-datafile-prefix))
+  (setq ignoramus-datafile-computed-dirprefixes   (mapcar 'ignoramus-ensure-trailing-slash
                                                           (ignoramus--extract-pathstrings ignoramus-datafile-dirprefix)))
 
   (setq ignoramus-datafile-computed-basenames-regexp       (regexp-opt ignoramus-datafile-computed-basenames))
@@ -927,20 +928,20 @@ has already been expanded."
     (let ((case-fold-search ignoramus-case-insensitive))
       (catch 'known
         (when (string-match-p ignoramus-datafile-computed-basenames-regexp file-basename)
-        (dolist (basename ignoramus-datafile-computed-basenames)
+          (dolist (basename ignoramus-datafile-computed-basenames)
             (when (compare-strings basename nil nil file-basename nil nil ignoramus-case-insensitive)
               (throw 'known (list file 'basename basename file-basename)))))
         (when (string-match-p ignoramus-datafile-computed-completepaths-regexp file)
-        (dolist (completepath ignoramus-datafile-computed-completepaths)
+          (dolist (completepath ignoramus-datafile-computed-completepaths)
             (when (compare-strings completepath nil nil file nil nil ignoramus-case-insensitive)
               (throw 'known (list file 'completepath completepath file)))))
         (when (string-match-p ignoramus-datafile-computed-prefixes-regexp file)
-        (dolist (prefix ignoramus-datafile-computed-prefixes)
-          (when (string-prefix-p prefix file ignoramus-case-insensitive)
+          (dolist (prefix ignoramus-datafile-computed-prefixes)
+            (when (string-prefix-p prefix file ignoramus-case-insensitive)
               (throw 'known (list file 'prefix (expand-file-name prefix) file)))))
         (when (string-match-p ignoramus-datafile-computed-dirprefixes-regexp file)
-        (dolist (dirprefix ignoramus-datafile-computed-dirprefixes)
-          (when (string-prefix-p dirprefix file ignoramus-case-insensitive)
+          (dolist (dirprefix ignoramus-datafile-computed-dirprefixes)
+            (when (string-prefix-p dirprefix file ignoramus-case-insensitive)
               (throw 'known (list file 'dirprefix dirprefix file)))))))))
 
 ;;;###autoload
