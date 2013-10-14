@@ -258,6 +258,18 @@ A directory prefix is a leading absolute path component.")
 (defvar ignoramus-datafile-computed-dirprefixes nil
   "A computed value based on `ignoramus-datafile-dirprefix'.")
 
+(defvar ignoramus-datafile-computed-basenames-regexp nil
+  "A computed value based on `ignoramus-datafile-basename'.")
+
+(defvar ignoramus-datafile-computed-completepaths-regexp nil
+  "A computed value based on `ignoramus-datafile-completepath'.")
+
+(defvar ignoramus-datafile-computed-prefixes-regexp nil
+  "A computed value based on `ignoramus-datafile-prefix'.")
+
+(defvar ignoramus-datafile-computed-dirprefixes-regexp nil
+  "A computed value based on `ignoramus-datafile-dirprefix'.")
+
 ;;; customizable variables
 
 ;;;###autoload
@@ -775,7 +787,12 @@ character for that system."
   (setq ignoramus-datafile-computed-completepaths (ignoramus--extract-pathstrings ignoramus-datafile-completepath))
   (setq ignoramus-datafile-computed-prefixes (ignoramus--extract-pathstrings ignoramus-datafile-prefix))
   (setq ignoramus-datafile-computed-dirprefixes (mapcar 'ignoramus-ensure-trailing-slash
-                                                        (ignoramus--extract-pathstrings ignoramus-datafile-dirprefix))))
+                                                          (ignoramus--extract-pathstrings ignoramus-datafile-dirprefix)))
+
+  (setq ignoramus-datafile-computed-basenames-regexp       (regexp-opt ignoramus-datafile-computed-basenames))
+  (setq ignoramus-datafile-computed-completepaths-regexp   (regexp-opt ignoramus-datafile-computed-completepaths))
+  (setq ignoramus-datafile-computed-prefixes-regexp        (regexp-opt ignoramus-datafile-computed-prefixes))
+  (setq ignoramus-datafile-computed-dirprefixes-regexp     (regexp-opt ignoramus-datafile-computed-dirprefixes)))
 
 
 ;;; configuration action plugins
