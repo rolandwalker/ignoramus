@@ -902,7 +902,7 @@ character for that system."
 ;;; principal external interface
 
 ;;;###autoload
-(defun ignoramus-matches-datafile (file)
+(defun ignoramus-matches-datafile (file &optional file-basename)
   "Return non-nil if FILE is used for data storage by a known Lisp library.
 
 This function identifies specific files used for persistence by
@@ -910,13 +910,17 @@ tramp, semantic, woman, etc.
 
 If a Lisp library is loaded after ignoramus, its files may not
 be recognized, in which case `ignoramus-compute-common-regexps'
-maybe called."
+maybe called.
+
+FILE-BASENAME may also be given as an optimization, in case the
+caller has already computed the basename."
   (when (stringp file)
     (unless ignoramus-boring-file-regexp
       (ignoramus-compute-common-regexps))
     (setq file (expand-file-name file))
-    (let ((file-basename (file-name-nondirectory file))
-           (case-fold-search ignoramus-case-insensitive))
+    (unless file-basename
+      (setq file-basename (file-name-nondirectory file)))
+    (let ((case-fold-search ignoramus-case-insensitive))
       (catch 'known
         (when (string-match-p ignoramus-datafile-computed-basenames-regexp file-basename)
         (dolist (basename ignoramus-datafile-computed-basenames)
@@ -959,14 +963,19 @@ SYMBOL-OR-STRING."
   (ignoramus-compute-common-regexps))
 
 ;;;###autoload
-(defun ignoramus-boring-p (file)
-  "Return non-nil if ignoramus thinks FILE is uninteresting."
+(defun ignoramus-boring-p (file &optional file-basename)
+  "Return non-nil if ignoramus thinks FILE is uninteresting.
+
+FILE-BASENAME may also be given as an optimization, in case the
+caller has already computed the basename."
   (unless ignoramus-boring-file-regexp
     (ignoramus-compute-common-regexps))
+  (unless file-basename
+    (setq file-basename (file-name-nondirectory file)))
   (let ((case-fold-search ignoramus-case-insensitive))
-    (or (string-match-p ignoramus-boring-file-regexp (file-name-nondirectory file))
+    (or (string-match-p ignoramus-boring-file-regexp file-basename)
         (and ignoramus-use-known-datafiles
-             (ignoramus-matches-datafile file)))))
+             (ignoramus-matches-datafile file file-basename)))))
 
 ;;;###autoload
 (defun ignoramus-setup (&optional actions)
