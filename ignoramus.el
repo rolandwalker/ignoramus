@@ -669,6 +669,7 @@ fully-qualified pathname."
     "\\`Icon.?\\'"                            ; OS X thumbnails
     "\\`\\..*\\.sw[a-z]\\'"                   ; vim
     "\\`\\.yas.*\\.el\\'"                     ; emacs yasnippet
+    "\\`\\..*~undo-tree~\\'"                  ; emacs undo-tree
     "\\`bzr_log\\.[[:alnum:]]+\\'"            ; emacs
     "\\`hg-editor-[[:alnum:]]+\\.txt\\'"      ; emacs
     "\\`svn-commit\\.tmp\\'"                  ; emacs
