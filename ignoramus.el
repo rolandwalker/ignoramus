@@ -921,6 +921,9 @@ has already been expanded."
   (when (stringp file)
     (unless ignoramus-boring-file-regexp
       (ignoramus-compute-common-regexps))
+    (when (file-remote-p file)
+      (setq file (aref (tramp-dissect-file-name file) 3))
+      (setq expanded nil))
     (unless expanded
       (setq file (expand-file-name file)))
     (unless file-basename
