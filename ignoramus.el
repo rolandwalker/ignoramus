@@ -924,7 +924,7 @@ has already been expanded."
     (unless ignoramus-boring-file-regexp
       (ignoramus-compute-common-regexps))
     (when (file-remote-p file)
-      (setq file (file-remote-p file 'localname))
+      (setq file (substring file (length (file-remote-p file))))
       (setq expanded nil))
     (unless expanded
       (setq file (expand-file-name file)))
