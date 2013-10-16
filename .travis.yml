@@ -33,7 +33,7 @@ env:
     - EMACS=emacs22
     - EMACS=emacs23
     - EMACS=emacs24
-#   - EMACS=emacs-snapshot
+    - EMACS=emacs-snapshot
   global:
     - SOME_TOKEN=some_value
 
