@@ -176,6 +176,7 @@
   (defvar shell-completion-fignore)
   (defvar speedbar-directory-unshown-regexp)
   (defvar speedbar-file-unshown-regexp)
+  (defvar vc-directory-exclusion-list)
   (defvar comint-completion-fignore))
 
 ;;; variables
