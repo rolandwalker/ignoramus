@@ -684,6 +684,24 @@ fully-qualified pathname."
   :type '(repeat regexp)
   :group 'ignoramus-patterns)
 
+;;; compatibility functions
+
+(unless (fboundp 'string-match-p)
+  ;; added in 23.x
+  (defun string-match-p (regexp string &optional start)
+    "Same as `string-match' except this function does not change the match data."
+    (let ((inhibit-changing-match-data t))
+      (string-match regexp string start))))
+
+(unless (fboundp 'string-prefix-p)
+  ;; added in 23.x
+  (defun string-prefix-p (str1 str2 &optional ignore-case)
+    "Return non-nil if STR1 is a prefix of STR2.
+If IGNORE-CASE is non-nil, the comparison is done without paying attention
+to case differences."
+    (eq t (compare-strings str1 nil nil
+                           str2 0 (length str1) ignore-case))))
+
 ;;; utility functions
 
 ;; generic functions
