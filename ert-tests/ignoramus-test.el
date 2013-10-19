@@ -327,7 +327,8 @@
 ;;; ignoramus-matches-datafile - todo test every TYPE
 
 (ert-deftest ignoramus:b-ignoramus-matches-datafile-01 nil
-  (let ((file-cleanup nil))
+  (let ((file-cleanup nil)
+        (recentf-save-file "~/.recentf"))
     (require 'recentf)
     (should
      (featurep 'recentf))
