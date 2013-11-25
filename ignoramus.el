@@ -1000,7 +1000,11 @@ FILE-BASENAME may also be given as an optimization, in case the
 caller has already computed the basename.
 
 As an optimization, EXPANDED may be set to t to indicate that FILE
-has already been expanded."
+has already been expanded.
+
+This function does not chase symlinks on FILE (see `file-truename').
+It may be changed to do so in the future.  You will probably get
+fewer surprises if symlinks in FILE are already resolved."
   (unless ignoramus-boring-file-regexp
     (ignoramus-compute-common-regexps))
   (unless file-basename
