@@ -606,6 +606,7 @@ fully-qualified pathname."
     "DerivedData"                          ; xcode
     "Desktop.ini"                          ; ms-windows
     "ehthumbs.db"                          ; ms-windows
+    "GHI_ISSUE"                            ; git ghi
     "git-rebase-todo"                      ; git
     "gwt-unitCache"                        ; gwt
     "gwt_bree"                             ; gwt
