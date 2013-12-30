@@ -211,6 +211,7 @@
 (defvar ignoramus-datafile-completepath '(
                                           abbrev-file-name
                                           ac-comphist-file
+                                          bdf-cache-file
                                           bm-repository-file
                                           bmkp-bmenu-commands-file
                                           bmkp-bmenu-state-file
@@ -218,12 +219,25 @@
                                           flymake-log-file-name
                                           guess-style-override-file
                                           ido-save-directory-list-file
+                                          kkc-init-file-name
                                           minimal-session-saver-data-file
+                                          org-default-notes-file
+                                          quickurl-url-file
                                           recentf-save-file
+                                          remember-data-file
                                           save-place-file
                                           savehist-file
+                                          shadow-info-file
+                                          shadow-todo-file
                                           smex-save-file
+                                          strokes-file
+                                          timeclock-file
+                                          todo-file-do
+                                          todo-file-done
+                                          todo-file-top
                                           tramp-persistency-file-name
+                                          type-break-file-name
+                                          viper-custom-file-name
                                           woman-cache-filename
                                           )
   "List of symbols or strings holding complete paths used for persistence by Emacs packages.")
@@ -239,6 +253,7 @@ A prefix is a leading absolute path component plus leading fragment of basename.
                                        ac-dictionary-directories
                                        ede-simple-save-directory
                                        eshell-directory-name
+                                       idlwave-config-directory
                                        pcache-directory
                                        semanticdb-default-save-directory
                                        tramp-auto-save-directory
@@ -524,6 +539,7 @@ fully-qualified pathname."
     ".Trashes"                             ; OS X
     ".actionScriptProperties"              ; actionscript
     ".apt_generated"                       ; gwt
+    ".bdfcache.el"                         ; emacs ps-bdf
     ".build"                               ; perl
     ".buildpath"                           ; eclipse
     ".builds"                              ; visualstudio
@@ -537,6 +553,7 @@ fully-qualified pathname."
     ".directory"                           ; KDE
     ".dropbox"                             ; dropbox
     ".dropbox.cache"                       ; dropbox
+    ".emacs-places"                        ; emacs saveplace
     ".emacs.desktop"                       ; emacs desktop.el
     ".emacs.desktop.lock"                  ; emacs desktop.el
     ".eunit"                               ; erlang
@@ -546,28 +563,43 @@ fully-qualified pathname."
     ".git"                                 ; git
     ".hg"                                  ; mercurial
     ".idea"                                ; various
+    ".idlwave"                             ; emacs idlwave
     ".ido.last"                            ; emacs ido-mode
+    ".kkcrc"                               ; emacs kkc Kana Kanji converter
     ".last_cover_stats"                    ; perl
     ".lein-deps-sum"                       ; leiningen
     ".loadpath"                            ; eclipse
     ".netrwhist"                           ; vim
+    ".notes"                               ; emacs org-mode / remember.el
     ".org-id-locations"                    ; emacs org-mode
     ".pc"                                  ; quilt
     ".project"                             ; eclipse
     ".projectile"                          ; emacs projectile
     ".prove"                               ; perl
     ".puppet-bak"                          ; puppet
+    ".quickurls"                           ; emacs quickurl
     ".recentf"                             ; emacs recentf
     ".redcar"                              ; redcar
     ".rspec"                               ; rails
     ".sass-cache"                          ; sass
     ".scala_dependencies"                  ; scala
+    ".shadow_todo"                         ; emacs shadowfile
+    ".shadows"                             ; emacs shadowfile
+    ".strokes"                             ; emacs strokes.el
     ".svn"                                 ; subversion
+    ".timelog"                             ; emacs timeclock
+    ".todo-do"                             ; emacs todo-mode
+    ".todo-done"                           ; emacs todo-mode
+    ".todo-top"                            ; emacs todo-mode
     ".tox"                                 ; python
+    ".type-break"                          ; emacs type-break
+    ".vip"                                 ; emacs viper-mode
+    ".viper"                               ; emacs viper-mode
     ".wmncach.el"                          ; emacs WoMan
     ".yardoc"                              ; yard
     "_MTN"                                 ; monotone
     "__history"                            ; delphi
+    "_bdfcache.el"                         ; emacs ps-bdf
     "_build"                               ; perl
     "_cgo_defun.c"                         ; go
     "_cgo_gotypes.go"                      ; go
