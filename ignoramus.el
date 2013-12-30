@@ -96,7 +96,7 @@
 ;;
 ;;     Hardcoded directory separator.
 ;;
-;;     Different results may be obtained from the datafiles
+;;     Different results may be obtained from the datafile
 ;;     functions depending on whether external libraries are
 ;;     loaded.
 ;;
