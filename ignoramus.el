@@ -4,7 +4,7 @@
 ;;
 ;; Author: Roland Walker <walker@pobox.com>
 ;; Homepage: http://github.com/rolandwalker/ignoramus
-;; URL: http://raw.github.com/rolandwalker/ignoramus/master/ignoramus.el
+;; URL: http://raw.githubusercontent.com/rolandwalker/ignoramus/master/ignoramus.el
 ;; Version: 0.7.2
 ;; Last-Updated: 30 Dec 2013
 ;; EmacsWiki: Ignoramus
