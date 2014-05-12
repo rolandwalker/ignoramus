@@ -699,17 +699,17 @@ fully-qualified pathname."
 
 (defcustom ignoramus-file-basename-regexps
   '(
-    "\\`#.*#\\'"                              ; emacs
-    "\\`.*\\.mex[^.]*\\'"                     ; matlab
-    "\\`Icon.?\\'"                            ; OS X thumbnails
-    "\\`\\..*\\.sw[a-z]\\'"                   ; vim
-    "\\`\\.yas.*\\.el\\'"                     ; emacs yasnippet
-    "\\`\\..*~undo-tree~\\'"                  ; emacs undo-tree
-    "\\`bzr_log\\.[[:alnum:]]+\\'"            ; emacs
-    "\\`hg-editor-[[:alnum:]]+\\.txt\\'"      ; emacs
-    "\\`svn-commit\\.tmp\\'"                  ; emacs
-    "\\`zshecl[0-9]+\\'"                      ; zsh
-    "\\`bash-fc-[0-9]+\\'"                    ; bash
+    "\\`#.*#\\'"                           ; emacs
+    "\\`.*\\.mex[^.]*\\'"                  ; matlab
+    "\\`Icon.?\\'"                         ; OS X thumbnails
+    "\\`\\..*\\.sw[a-z]\\'"                ; vim
+    "\\`\\.yas.*\\.el\\'"                  ; emacs yasnippet
+    "\\`\\..*~undo-tree~\\'"               ; emacs undo-tree
+    "\\`bzr_log\\.[[:alnum:]]+\\'"         ; emacs
+    "\\`hg-editor-[[:alnum:]]+\\.txt\\'"   ; emacs
+    "\\`svn-commit\\.tmp\\'"               ; emacs
+    "\\`zshecl[0-9]+\\'"                   ; zsh
+    "\\`bash-fc-[0-9]+\\'"                 ; bash
     "\\.\\(BACKUP\\|LOCAL\\|BASE\\|REMOTE\\)\\.[0-9]\\{3,\\}" ; git
     )
   "List of regexps matching filenames to ignore.
