@@ -710,6 +710,7 @@ fully-qualified pathname."
     "\\`svn-commit\\.tmp\\'"                  ; emacs
     "\\`zshecl[0-9]+\\'"                      ; zsh
     "\\`bash-fc-[0-9]+\\'"                    ; bash
+    "\\.\\(BACKUP\\|LOCAL\\|BASE\\|REMOTE\\)\\.[0-9]\\{3,\\}" ; git
     )
   "List of regexps matching filenames to ignore.
 
