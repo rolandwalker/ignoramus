@@ -8,7 +8,7 @@ Ignore backups, build files, *et al*. in Emacs.
 Quickstart
 ----------
 
-```lisp
+```elisp
 (require 'dired-x)
  
 (require 'ignoramus)
@@ -30,7 +30,7 @@ and the logic for applying those patterns together in one place.
 To use ignoramus, place the ignoramus.el library somewhere Emacs
 can find it, and add the following to your `~/.emacs` file:
 
-```lisp
+```elisp
 (require 'ignoramus)
 (ignoramus-setup)
 ```
@@ -53,7 +53,7 @@ knows about for ignoring files.  Currently these are
 
 You can specify a shorter list of actions as an argument
 
-```lisp
+```elisp
 (ignoramus-setup '(pcomplete shell ido))
 ```
 
