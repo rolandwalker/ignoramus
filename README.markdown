@@ -1,12 +1,10 @@
 [![Build Status](https://secure.travis-ci.org/rolandwalker/ignoramus.png?branch=master)](http://travis-ci.org/rolandwalker/ignoramus)
 
-Overview
-========
+# Overview
 
 Ignore backups, build files, *et al*. in Emacs.
 
-Quickstart
-----------
+## Quickstart
 
 ```elisp
 (require 'dired-x)
@@ -20,8 +18,7 @@ Quickstart
 ;; execute C-x C-j   ; backups and build files now omitted from dired
 ```
 
-Explanation
------------
+## Explanation
 
 Every library has its own method for defining uninteresting files
 to ignore.  Ignoramus puts the listing of ignorable-file patterns
@@ -59,8 +56,7 @@ You can specify a shorter list of actions as an argument
 
 or customize the value of `ignoramus-default-actions`.
 
-Compatibility and Requirements
-------------------------------
+## Compatibility and Requirements
 
 	GNU Emacs version 24.4-devel     : yes, at the time of writing
 	GNU Emacs version 24.3           : yes
@@ -70,8 +66,7 @@ Compatibility and Requirements
 
 No external dependencies
 
-Notes
------
+## Notes
 
 Three functions are provided to be called from Lisp:
 
@@ -79,8 +74,7 @@ Three functions are provided to be called from Lisp:
 	ignoramus-register-datafile
 	ignoramus-matches-datafile
 
-Bugs
-----
+## Bugs
 
 The one-size-fits-all approach necessarily makes this library
 a blunt instrument.
