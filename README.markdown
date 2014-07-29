@@ -24,7 +24,7 @@ Every library has its own method for defining uninteresting files
 to ignore.  Ignoramus puts the listing of ignorable-file patterns
 and the logic for applying those patterns together in one place.
 
-To use ignoramus, place the ignoramus.el library somewhere Emacs
+To use ignoramus, place the `ignoramus.el` library somewhere Emacs
 can find it, and add the following to your `~/.emacs` file:
 
 ```elisp
