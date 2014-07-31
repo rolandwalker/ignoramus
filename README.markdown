@@ -4,6 +4,12 @@
 
 Ignore backups, build files, *et al*. in Emacs.
 
+ * [Quickstart](#quickstart)
+ * [Explanation](#explanation)
+ * [Compatibility and Requirements](#compatibility-and-requirements)
+ * [Notes](#notes)
+ * [Bugs](#bugs)
+
 ## Quickstart
 
 ```elisp
