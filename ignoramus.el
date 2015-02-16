@@ -910,10 +910,7 @@ character for that system."
 (defun ignoramus-do-ignore-dired ()
   "Tell `dired-mode' to ignore unwanted files."
 
-  (setq dired-omit-mode t)
-  (add-hook 'dired-mode-hook #'(lambda ()
-                                 (when (eq major-mode 'dired-mode)
-                                   (dired-omit-mode 1))))
+  (add-hook 'dired-mode-hook #'dired-omit-mode)
 
   ;; Ignoramus merges the patterns for "garbage" (dired.el) and
   ;; "omit" (dired-x.el) so they are identical.
