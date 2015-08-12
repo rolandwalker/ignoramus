@@ -530,6 +530,7 @@ fully-qualified pathname."
   '(
     "$RECYCLE.BIN"                         ; ms-windows
     ".AppleDouble"                         ; OS X
+    ".AppleDB"                             ; OS X
     ".DS_Store"                            ; OS X
     ".DocumentRevisions-V100"              ; OS X
     ".LSOverride"                          ; OS X
@@ -538,6 +539,7 @@ fully-qualified pathname."
     ".TemporaryItems"                      ; OS X
     ".Trashes"                             ; OS X
     ".actionScriptProperties"              ; actionscript
+    ".apdisk"                              ; OS X
     ".apt_generated"                       ; gwt
     ".bdfcache.el"                         ; emacs ps-bdf
     ".build"                               ; perl
