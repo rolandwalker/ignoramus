@@ -701,7 +701,7 @@ fully-qualified pathname."
   '(
     "\\`#.*#\\'"                           ; emacs
     "\\`.*\\.mex[^.]*\\'"                  ; matlab
-    "\\`Icon.?\\'"                         ; OS X thumbnails
+    "\\`Icon\r\\'"                         ; OS X thumbnails
     "\\`\\..*\\.sw[a-z]\\'"                ; vim
     "\\`\\.yas.*\\.el\\'"                  ; emacs yasnippet
     "\\`\\..*~undo-tree~\\'"               ; emacs undo-tree
