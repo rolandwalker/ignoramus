@@ -988,11 +988,11 @@ has already been expanded."
       (catch 'known
         (when (string-match-p ignoramus-datafile-computed-basenames-regexp file-basename)
           (dolist (basename ignoramus-datafile-computed-basenames)
-            (when (compare-strings basename nil nil file-basename nil nil ignoramus-case-insensitive)
+            (when (eq t (compare-strings basename nil nil file-basename nil nil ignoramus-case-insensitive))
               (throw 'known (list file 'basename basename file-basename)))))
         (when (string-match-p ignoramus-datafile-computed-completepaths-regexp file)
           (dolist (completepath ignoramus-datafile-computed-completepaths)
-            (when (compare-strings completepath nil nil file nil nil ignoramus-case-insensitive)
+            (when (eq t (compare-strings completepath nil nil file nil nil ignoramus-case-insensitive))
               (throw 'known (list file 'completepath completepath file)))))
         (when (string-match-p ignoramus-datafile-computed-prefixes-regexp file)
           (dolist (prefix ignoramus-datafile-computed-prefixes)
