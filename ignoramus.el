@@ -223,7 +223,8 @@
                                           ido-save-directory-list-file
                                           kkc-init-file-name
                                           minimal-session-saver-data-file
-                                          org-default-notes-file
+                                          ;; disabled. is this file expected to be edited manually as well as programatically?
+                                          ;; org-default-notes-file
                                           quickurl-url-file
                                           recentf-save-file
                                           remember-data-file
