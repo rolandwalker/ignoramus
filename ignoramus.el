@@ -295,10 +295,10 @@ A directory prefix is a leading absolute path component.")
 ;;;###autoload
 (progn
   ;; obsolete forms
-  (define-obsolete-variable-alias 'ignoramus-file-endings     'ignoramus-file-basename-endings)
-  (define-obsolete-variable-alias 'ignoramus-file-beginnings  'ignoramus-file-basename-beginnings)
-  (define-obsolete-variable-alias 'ignoramus-file-exact-names 'ignoramus-file-basename-exact-names)
-  (define-obsolete-variable-alias 'ignoramus-file-regexps     'ignoramus-file-basename-regexps))
+  (define-obsolete-variable-alias 'ignoramus-file-endings     'ignoramus-file-basename-endings "0.6.0")
+  (define-obsolete-variable-alias 'ignoramus-file-beginnings  'ignoramus-file-basename-beginnings "0.6.0")
+  (define-obsolete-variable-alias 'ignoramus-file-exact-names 'ignoramus-file-basename-exact-names "0.6.0")
+  (define-obsolete-variable-alias 'ignoramus-file-regexps     'ignoramus-file-basename-regexps "0.6.0"))
 
 ;;;###autoload
 (defgroup ignoramus nil
