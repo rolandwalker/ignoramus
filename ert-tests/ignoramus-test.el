@@ -450,7 +450,7 @@
                          (when (and (functionp sym)
                                     (string-match "\\`ignoramus-do-ignore-\\(.+\\)" (symbol-name sym))
                                     (memq (intern (match-string 1 (symbol-name sym))) ignoramus-known-actions))
-                           (incf count)))))
+                           (cl-incf count)))))
          count))))
 
 
