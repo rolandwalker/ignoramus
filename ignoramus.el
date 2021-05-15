@@ -1,4 +1,4 @@
-;;; ignoramus.el --- Ignore backups, build files, et al.
+;;; ignoramus.el --- Ignore backups, build files, et al. -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2012-2015 Roland Walker
 ;;
