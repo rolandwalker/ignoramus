@@ -219,6 +219,7 @@
                                           bmkp-bmenu-commands-file
                                           bmkp-bmenu-state-file
                                           bookmark-default-file
+                                          company-statistics-file
                                           flymake-log-file-name
                                           guess-style-override-file
                                           ido-save-directory-list-file
