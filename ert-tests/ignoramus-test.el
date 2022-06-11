@@ -11,7 +11,7 @@
   (should
    (file-exists-p "ignoramus-test.el"))
   (should
-   (string-match-p "/ert-tests/\\'" default-directory)))
+   (string-match-p "/ert-tests/\\'" (file-name-as-directory default-directory))))
 
 
 ;;; ignoramus-boring-p
@@ -245,7 +245,7 @@
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-01 nil
   (let ((value "nonexistent_file"))
     (should
-     (equal (list (expand-file-name value default-directory))
+     (equal (list (expand-file-name value (file-name-as-directory default-directory)))
             (ignoramus--extract-pathstrings value)))))
 
 (ert-deftest ignoramus:b-ignoramus--extract-pathstrings-02 nil
