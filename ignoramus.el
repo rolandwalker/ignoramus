@@ -661,6 +661,7 @@ fully-qualified pathname."
     "MYMETA.yml"                           ; perl
     "nbbuild"                              ; netbeans
     "nbdist"                               ; netbeans
+    "node_modules"                         ; node
     "nosetests.xml"                        ; python
     "nytprof"                              ; perl
     "nytprof.out"                          ; perl
